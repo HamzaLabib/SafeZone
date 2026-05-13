@@ -1,4 +1,7 @@
 import { GraduationCap, ShieldCheck, UsersRound } from 'lucide-react';
+import { Seo } from '../components/Seo';
+import { Card } from '../components/ui/Card';
+import { businessInfo } from '../data/business';
 
 const values = [
   { title: 'Mission-led training', icon: ShieldCheck, text: 'We help students build the discipline, awareness, and judgment needed for responsible security work.' },
@@ -9,6 +12,10 @@ const values = [
 export function AboutPage() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+      <Seo
+        title="About"
+        description="Learn about Safe Zone Security Academy's professional security education, admissions guidance, and training purpose."
+      />
       <section className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">About Safe Zone</p>
@@ -22,21 +29,22 @@ export function AboutPage() {
             observant, and confident professionals.
           </p>
         </div>
-        <div className="rounded-lg bg-slate-950 p-8 text-white shadow-sm">
+        <Card className="bg-academyNavy p-8 text-white">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">Your safety, our mission</p>
           <h2 className="mt-2 text-3xl font-extrabold">Training quality that respects the work.</h2>
           <p className="mt-4 leading-7 text-white/75">
             Security education should be practical, current, and grounded in real responsibility. That standard guides every course we offer.
           </p>
-        </div>
+          <p className="mt-4 text-sm font-semibold text-blue-200">{businessInfo.location}</p>
+        </Card>
       </section>
       <section className="mt-10 grid gap-4 md:grid-cols-3">
         {values.map(({ title, text, icon: Icon }) => (
-          <article key={title} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-            <Icon className="h-7 w-7 text-academyBlue" />
+          <Card as="article" key={title} className="p-6">
+            <Icon className="h-7 w-7 text-academyBlue" aria-hidden="true" />
             <h2 className="mt-4 text-xl font-bold text-slate-950">{title}</h2>
             <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-          </article>
+          </Card>
         ))}
       </section>
     </main>

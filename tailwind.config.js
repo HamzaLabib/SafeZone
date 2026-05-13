@@ -6,6 +6,9 @@ export default {
       colors: {
         academyBlue: '#1d5cff',
         academyNavy: '#020d2d',
+        academyInk: '#020617',
+        academyPanel: '#031547',
+        academyFooter: '#020a27',
       },
     },
   },

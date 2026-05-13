@@ -4,9 +4,13 @@ export const courses = [
     title: 'Security Guard Training',
     duration: '40 hours',
     level: 'Beginner',
+    category: 'Core Training',
+    outcome: 'Security career readiness',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/security-guard-training.jpg',
+    imageAlt: 'Security training students reviewing professional site procedures',
     shortDescription:
       'Core security guard preparation focused on patrol procedures, report writing, emergency response, and professional conduct.',
     learn: [
@@ -32,9 +36,13 @@ export const courses = [
     title: 'First Aid & CPR (Level C)',
     duration: '16 hours',
     level: 'Certification',
+    category: 'Certification',
+    outcome: 'Emergency response readiness',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1571772996211-2f02c9727629?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/first-aid-cpr-level-c.jpg',
+    imageAlt: 'First aid and CPR training equipment prepared for class',
     shortDescription:
       'Practical first aid and CPR training for workplace safety, emergency care, and security-sector readiness.',
     learn: [
@@ -60,9 +68,13 @@ export const courses = [
     title: 'Loss Prevention',
     duration: '20 hours',
     level: 'Intermediate',
+    category: 'Specialized Training',
+    outcome: 'Retail and site risk awareness',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1505238680356-667803448bb6?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/loss-prevention.jpg',
+    imageAlt: 'Retail environment used for loss prevention training context',
     shortDescription:
       'Retail and site-focused training for identifying risks, preventing theft, documenting incidents, and working safely with teams.',
     learn: [
@@ -88,9 +100,13 @@ export const courses = [
     title: 'Security Supervisor Essentials',
     duration: '24 hours',
     level: 'Advanced',
+    category: 'Leadership',
+    outcome: 'Supervisor readiness',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/security-supervisor.jpg',
+    imageAlt: 'Security supervisor planning team operations in a training setting',
     shortDescription:
       'Leadership training for shift leads and supervisors responsible for team readiness, site procedures, and client communication.',
     learn: [
@@ -116,9 +132,13 @@ export const courses = [
     title: 'Conflict De-escalation',
     duration: '12 hours',
     level: 'Professional development',
+    category: 'Professional Development',
+    outcome: 'Safer communication under pressure',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/conflict-de-escalation.jpg',
+    imageAlt: 'Professional group training focused on communication skills',
     shortDescription:
       'Scenario-based communication training for reducing tension, improving safety, and handling difficult interactions professionally.',
     learn: [
@@ -144,9 +164,13 @@ export const courses = [
     title: 'Emergency Response Procedures',
     duration: '18 hours',
     level: 'Intermediate',
+    category: 'Specialized Training',
+    outcome: 'Site emergency readiness',
+    format: 'In-person / to be confirmed',
+    schedule: 'Contact admissions',
     price: 'Contact us for pricing',
-    image:
-      'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?q=80&w=1200&auto=format&fit=crop',
+    image: '/course-images/emergency-response.jpg',
+    imageAlt: 'Emergency response training context with medical and safety equipment',
     shortDescription:
       'Training for responding to site emergencies, evacuations, alarms, hazards, and coordination with emergency services.',
     learn: [
@@ -175,4 +199,8 @@ export function getCourseById(courseId) {
 
 export function getFeaturedCourses() {
   return courses.filter((course) => course.featured);
+}
+
+export function getCourseCategories() {
+  return ['All', ...Array.from(new Set(courses.map((course) => course.category)))];
 }
