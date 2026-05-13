@@ -55,7 +55,7 @@ export function HomePage() {
               <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">Ready to take the next step?</p>
               <h2 className="mt-2 text-3xl font-extrabold">Connect with admissions before launch details are finalized.</h2>
               <p className="mt-3 max-w-3xl leading-7 text-white/75">
-                Submit your course interest or ask a question. The current website prepares requests locally until email/database integration is connected.
+                Submit your course interest or ask a question. Admissions can review new website submissions and follow up with next steps.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

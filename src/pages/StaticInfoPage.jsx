@@ -5,7 +5,7 @@ import { Card } from '../components/ui/Card';
 const content = {
   privacy: {
     title: 'Privacy Policy',
-    text: 'Safe Zone Security Academy uses submitted contact information to respond to inquiries, process registration interest, and support student communication. The current frontend forms must be connected to email or a database before launch.',
+    text: 'Safe Zone Security Academy uses submitted contact information to respond to inquiries, process registration interest, and support student communication.',
   },
   terms: {
     title: 'Terms of Use',

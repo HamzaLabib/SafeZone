@@ -14,6 +14,7 @@ const initialValues = {
   contactMethod: 'email',
   message: '',
   consent: false,
+  website: '',
 };
 
 function validate(values) {
@@ -53,7 +54,8 @@ export function RegisterPage() {
   );
   const [values, setValues] = useState({ ...initialValues, course: initialCourse });
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [formMessage, setFormMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setValues((current) => ({ ...current, course: initialCourse || current.course }));
@@ -67,16 +69,75 @@ export function RegisterPage() {
       delete nextErrors[name];
       return nextErrors;
     });
-    setSubmitted(false);
+    setFormMessage(null);
   }
 
-  function handleSubmit(event) {
+  function mapServerErrors(serverErrors = {}) {
+    const fieldMap = {
+      fullName: 'name',
+      courseInterest: 'course',
+      preferredContactMethod: 'contactMethod',
+    };
+
+    return Object.entries(serverErrors).reduce((nextErrors, [key, value]) => {
+      nextErrors[fieldMap[key] || key] = value;
+      return nextErrors;
+    }, {});
+  }
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
 
-    if (Object.keys(nextErrors).length === 0) {
-      setSubmitted(true);
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormMessage(null);
+
+    try {
+      const selectedCourse = courses.find((course) => course.id === values.course);
+      const response = await fetch('/api/register-interest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: values.name,
+          email: values.email,
+          phone: values.phone,
+          courseInterest: selectedCourse?.title || values.course,
+          preferredContactMethod: values.contactMethod,
+          message: values.message,
+          consent: values.consent,
+          website: values.website,
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        setErrors(mapServerErrors(result.errors));
+        setFormMessage({
+          type: 'error',
+          text: result.error || 'We could not submit your request right now.',
+        });
+        return;
+      }
+
+      setValues({ ...initialValues, course: initialCourse });
+      setFormMessage({
+        type: 'success',
+        text: result.message || 'Registration interest submitted successfully.',
+      });
+    } catch {
+      setFormMessage({
+        type: 'error',
+        text: 'We could not reach the server. Please try again later.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -84,14 +145,14 @@ export function RegisterPage() {
     <>
       <Seo
         title="Register Interest"
-        description="Prepare a Safe Zone Security Academy course registration request and connect with admissions for schedule, pricing, and enrollment next steps."
+        description="Submit a Safe Zone Security Academy course registration request and connect with admissions for schedule, pricing, and enrollment next steps."
       />
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:px-8 lg:grid-cols-[0.9fr_1.1fr]">
         <section>
           <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Register interest</p>
           <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Start your security training journey.</h1>
           <p className="mt-4 leading-7 text-slate-600">
-            Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps once the form is connected to email or a database.
+            Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps.
           </p>
           <Card className="mt-6 bg-academyNavy p-5 text-white">
             <h2 className="text-lg font-bold">Student accounts are coming soon</h2>
@@ -177,10 +238,26 @@ export function RegisterPage() {
               error={errors.consent}
               onChange={handleChange}
             />
-            <Button type="submit">Prepare Registration Request</Button>
-            {submitted && (
-              <p className="rounded-lg bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-800">
-                Thank you. Your request has been prepared. Please connect this form to email/database before launch.
+            <input
+              className="hidden"
+              name="website"
+              tabIndex="-1"
+              autoComplete="off"
+              value={values.website}
+              onChange={handleChange}
+              aria-hidden="true"
+            />
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Submit Registration Request'}
+            </Button>
+            {formMessage && (
+              <p
+                className={[
+                  'rounded-lg px-4 py-3 text-sm font-semibold',
+                  formMessage.type === 'success' ? 'bg-blue-50 text-blue-800' : 'bg-red-50 text-red-800',
+                ].join(' ')}
+              >
+                {formMessage.text}
               </p>
             )}
           </form>
