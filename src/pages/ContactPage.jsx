@@ -12,6 +12,7 @@ const initialValues = {
   phone: '',
   subject: '',
   message: '',
+  website: '',
 };
 
 function validate(values) {
@@ -41,7 +42,8 @@ function validate(values) {
 export function ContactPage() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [formMessage, setFormMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -51,16 +53,52 @@ export function ContactPage() {
       delete nextErrors[name];
       return nextErrors;
     });
-    setSubmitted(false);
+    setFormMessage(null);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
 
-    if (Object.keys(nextErrors).length === 0) {
-      setSubmitted(true);
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormMessage(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        setErrors(result.errors || {});
+        setFormMessage({
+          type: 'error',
+          text: result.error || 'We could not submit your message right now.',
+        });
+        return;
+      }
+
+      setValues(initialValues);
+      setFormMessage({
+        type: 'success',
+        text: result.message || 'Contact message submitted successfully.',
+      });
+    } catch {
+      setFormMessage({
+        type: 'error',
+        text: 'We could not reach the server. Please try again later.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -146,10 +184,26 @@ export function ContactPage() {
               error={errors.message}
               onChange={handleChange}
             />
-            <Button type="submit">Prepare Message</Button>
-            {submitted && (
-              <p className="rounded-lg bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-800">
-                Thank you. Your message has been prepared. Please connect this form to email/database before launch.
+            <input
+              className="hidden"
+              name="website"
+              tabIndex="-1"
+              autoComplete="off"
+              value={values.website}
+              onChange={handleChange}
+              aria-hidden="true"
+            />
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Send Message'}
+            </Button>
+            {formMessage && (
+              <p
+                className={[
+                  'rounded-lg px-4 py-3 text-sm font-semibold',
+                  formMessage.type === 'success' ? 'bg-blue-50 text-blue-800' : 'bg-red-50 text-red-800',
+                ].join(' ')}
+              >
+                {formMessage.text}
               </p>
             )}
           </form>
