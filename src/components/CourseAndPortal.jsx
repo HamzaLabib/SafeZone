@@ -1,29 +1,26 @@
-import { CircleGauge } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Award, BookOpenCheck, CalendarClock, CircleGauge, LockKeyhole } from 'lucide-react';
 import { CourseCard } from './CourseCard';
 import { getFeaturedCourses } from '../data/courses';
-
-const portalLinks = [
-  { label: 'Dashboard', to: '/dashboard' },
-  { label: 'My Courses', to: '/dashboard' },
-  { label: 'Progress', to: '/dashboard' },
-  { label: 'Certificates', to: '/dashboard' },
-  { label: 'Account Settings', to: '/dashboard' },
-  { label: 'Logout', to: '/login' },
-];
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
+import { SectionHeader } from './ui/SectionHeader';
 
 export function CourseAndPortal() {
   const featuredCourses = getFeaturedCourses();
 
   return (
-    <section className="grid gap-6 lg:grid-cols-2">
+    <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
       <div>
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="text-3xl font-extrabold">Featured Courses</h2>
-          <Link className="cursor-pointer text-sm font-semibold text-academyBlue hover:text-blue-700" to="/courses">
-            View All Courses
-          </Link>
-        </div>
+        <SectionHeader
+          eyebrow="Featured courses"
+          title="Start with the right training path"
+          description="Explore practical programs designed for security readiness, emergency response, and professional development."
+          action={
+            <Button to="/courses" variant="ghost" size="sm">
+              View All Courses
+            </Button>
+          }
+        />
         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
           {featuredCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
@@ -31,63 +28,42 @@ export function CourseAndPortal() {
         </div>
       </div>
       <div>
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="text-3xl font-extrabold">Student Portal Preview</h2>
-          <Link className="cursor-pointer text-sm font-semibold text-academyBlue hover:text-blue-700" to="/dashboard">
-            Open Dashboard
-          </Link>
-        </div>
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-          <div className="grid grid-cols-1 md:grid-cols-[160px_1fr]">
-            <aside className="bg-[#031547] p-3 text-sm text-white">
-              <ul className="grid grid-cols-2 gap-2 md:block md:space-y-2">
-                {portalLinks.map((item) => (
-                  <li key={item.label}>
-                    <Link className="block cursor-pointer rounded px-2 py-1 text-white/90 transition hover:bg-blue-600/40 hover:text-white" to={item.to}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </aside>
-            <div className="p-4">
-              <div className="grid gap-2 md:grid-cols-4">
-                {[
-                  ['Enrolled Courses', '3'],
-                  ['In Progress', '2'],
-                  ['Certificates Earned', '1'],
-                  ['Total Progress', '68%'],
-                ].map(([label, value]) => (
-                  <div className="rounded-lg border border-slate-200 p-2" key={label}>
-                    <p className="text-xs text-slate-500">{label}</p>
-                    <p className="text-xl font-bold">{value}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 grid gap-2 md:grid-cols-2">
-                <div className="rounded-lg border border-slate-200 p-3">
-                  <h4 className="font-semibold">Recent Activity</h4>
-                  <ul className="mt-2 space-y-2 text-sm text-slate-600">
-                    <li>Completed: Security Awareness</li>
-                    <li>In Progress: Security Guard Training</li>
-                    <li>Upcoming: First Aid & CPR</li>
-                  </ul>
-                </div>
-                <div className="rounded-lg border border-slate-200 p-3">
-                  <h4 className="font-semibold">Progress Overview</h4>
-                  <div className="mt-5 flex items-center justify-center">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-full border-[10px] border-blue-500 text-xl font-bold text-slate-700">
-                      68%
-                    </div>
-                  </div>
-                  <p className="mt-3 inline-flex items-center gap-2 text-sm">
-                    <CircleGauge className="h-4 w-4 text-blue-500" /> On track
-                  </p>
-                </div>
-              </div>
-            </div>
+        <SectionHeader
+          eyebrow="Coming soon"
+          title="Student portal preview"
+          description="Future student accounts will help learners view enrolled courses, progress, certificates, and profile details after authentication is implemented."
+        />
+        <Card className="overflow-hidden">
+          <div className="bg-academyNavy p-5 text-white">
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-200">
+              <LockKeyhole className="h-4 w-4" aria-hidden="true" />
+              Preview only
+            </p>
+            <h3 className="mt-4 text-2xl font-extrabold">No student data is active yet</h3>
+            <p className="mt-2 text-sm leading-6 text-white/75">
+              This area is intentionally not connected to fake accounts. It is ready to become a real portal when backend authentication is added.
+            </p>
           </div>
-        </div>
+          <div className="grid gap-3 p-5 sm:grid-cols-2">
+            {[
+              { icon: BookOpenCheck, title: 'My Courses', text: 'View enrolled programs after login.' },
+              { icon: CircleGauge, title: 'Progress', text: 'Track lessons and completion status.' },
+              { icon: Award, title: 'Certificates', text: 'Access issued documents when available.' },
+              { icon: CalendarClock, title: 'Schedules', text: 'Review confirmed course dates.' },
+            ].map(({ icon: Icon, title, text }) => (
+              <div className="rounded-lg border border-slate-200 p-4" key={title}>
+                <Icon className="h-5 w-5 text-academyBlue" aria-hidden="true" />
+                <h4 className="mt-3 font-bold text-slate-950">{title}</h4>
+                <p className="mt-1 text-sm leading-6 text-slate-600">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-slate-200 bg-slate-50 p-5">
+            <Button to="/login" variant="outline" className="w-full">
+              View Portal Status
+            </Button>
+          </div>
+        </Card>
       </div>
     </section>
   );

@@ -1,26 +1,32 @@
-import { BriefcaseBusiness, ShieldCheck, Users, GraduationCap } from 'lucide-react';
+import { BriefcaseBusiness, FileCheck2, ShieldCheck, Users } from 'lucide-react';
+import { trustIndicators } from '../data/business';
+import { Card } from './ui/Card';
+import { SectionHeader } from './ui/SectionHeader';
 
-const items = [
-  { icon: ShieldCheck, title: 'Industry-Recognized Training', text: 'Certified programs aligned with Quebec and Canadian security industry standards.' },
-  { icon: Users, title: 'Experienced Instructors', text: 'Learn from active security professionals with real-world experience.' },
-  { icon: GraduationCap, title: 'Hands-On Learning', text: 'Practical training scenarios designed to build confidence and competence.' },
-  { icon: BriefcaseBusiness, title: 'Career-Focused Support', text: 'Guidance, resources, and support to help you start and grow your security career.' },
-];
+const icons = [ShieldCheck, BriefcaseBusiness, Users, FileCheck2];
 
 export function WhyChooseUs() {
   return (
     <section className="mb-10">
-      <h2 className="mb-6 text-center text-4xl font-extrabold text-slate-800">Why Choose Us</h2>
+      <SectionHeader
+        align="center"
+        eyebrow="Why Safe Zone"
+        title="Training support built around career readiness"
+        description="The launch site focuses on course discovery and admissions guidance while the student portal is prepared for a future backend."
+      />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {items.map(({ icon: Icon, title, text }) => (
-          <article key={title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+        {trustIndicators.map(({ title, text }, index) => {
+          const Icon = icons[index] || ShieldCheck;
+          return (
+          <Card as="article" key={title} className="p-5">
             <div className="mb-3 inline-flex rounded-full bg-blue-100 p-3 text-academyBlue">
-              <Icon />
+              <Icon aria-hidden="true" />
             </div>
             <h3 className="text-xl font-bold">{title}</h3>
             <p className="mt-2 text-slate-600">{text}</p>
-          </article>
-        ))}
+          </Card>
+          );
+        })}
       </div>
     </section>
   );

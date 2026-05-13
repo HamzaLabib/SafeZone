@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Seo } from '../components/Seo';
+import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/Card';
 
 const content = {
   privacy: {
     title: 'Privacy Policy',
-    text: 'Safe Zone Security Academy uses submitted contact information to respond to inquiries, process registration interest, and support student communication.',
+    text: 'Safe Zone Security Academy uses submitted contact information to respond to inquiries, process registration interest, and support student communication. The current frontend forms must be connected to email or a database before launch.',
   },
   terms: {
     title: 'Terms of Use',
@@ -16,13 +18,14 @@ export function StaticInfoPage({ type }) {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 md:px-8">
-      <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+      <Seo title={page.title} description={page.text} />
+      <Card as="section" className="p-6">
         <h1 className="text-4xl font-extrabold text-slate-950">{page.title}</h1>
         <p className="mt-4 leading-7 text-slate-600">{page.text}</p>
-        <Link className="mt-6 inline-flex rounded-lg bg-academyBlue px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700" to="/contact">
+        <Button className="mt-6" to="/contact">
           Contact Us
-        </Link>
-      </section>
+        </Button>
+      </Card>
     </main>
   );
 }

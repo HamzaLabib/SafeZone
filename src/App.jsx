@@ -9,6 +9,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { FAQPage } from './pages/FAQPage';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { StaticInfoPage } from './pages/StaticInfoPage';
 
@@ -30,7 +31,7 @@ export default function App() {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/privacy" element={<StaticInfoPage type="privacy" />} />
         <Route path="/terms" element={<StaticInfoPage type="terms" />} />
-        <Route path="*" element={<CoursesPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </div>
