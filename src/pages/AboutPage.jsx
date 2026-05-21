@@ -29,13 +29,20 @@ export function AboutPage() {
             observant, and confident professionals.
           </p>
         </div>
-        <Card className="bg-academyNavy p-8 text-white">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">Your safety, our mission</p>
-          <h2 className="mt-2 text-3xl font-extrabold">Training quality that respects the work.</h2>
-          <p className="mt-4 leading-7 text-white/75">
-            Security education should be practical, current, and grounded in real responsibility. That standard guides every course we offer.
-          </p>
-          <p className="mt-4 text-sm font-semibold text-blue-200">{businessInfo.location}</p>
+        <Card className="overflow-hidden bg-academyNavy text-white">
+          <img
+            src="/training-images/security-training-team.jpg"
+            alt="Diverse security training team reviewing procedures in a professional academy classroom"
+            className="aspect-[16/10] w-full object-cover"
+          />
+          <div className="p-6 md:p-8">
+            <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">Your safety, our mission</p>
+            <h2 className="mt-2 text-3xl font-extrabold">Training quality that respects the work.</h2>
+            <p className="mt-4 leading-7 text-white/75">
+              Security education should be practical, current, and grounded in real responsibility. That standard guides every course we offer.
+            </p>
+            <p className="mt-4 text-sm font-semibold text-blue-200">{businessInfo.location}</p>
+          </div>
         </Card>
       </section>
       <section className="mt-10 grid gap-4 md:grid-cols-3">

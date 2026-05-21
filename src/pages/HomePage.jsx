@@ -1,6 +1,7 @@
 import { CourseAndPortal } from '../components/CourseAndPortal';
 import { FAQPreview } from '../components/FAQPreview';
 import { Hero } from '../components/Hero';
+import { ProfessionalTrainingVisuals } from '../components/ProfessionalTrainingVisuals';
 import { Seo } from '../components/Seo';
 import { WhyChooseUs } from '../components/WhyChooseUs';
 import { Button } from '../components/ui/Button';
@@ -28,6 +29,7 @@ export function HomePage() {
       <Hero />
       <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
         <WhyChooseUs />
+        <ProfessionalTrainingVisuals />
         <CourseAndPortal />
         <section className="mt-12">
           <SectionHeader

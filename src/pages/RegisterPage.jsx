@@ -154,6 +154,19 @@ export function RegisterPage() {
           <p className="mt-4 leading-7 text-slate-600">
             Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps.
           </p>
+          <Card as="figure" className="mt-6 overflow-hidden">
+            <img
+              src="/training-images/security-officer-female.jpg"
+              alt="Female private security officer reviewing academy training material before registration"
+              className="aspect-[4/3] w-full object-cover"
+            />
+            <figcaption className="p-5">
+              <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Professional readiness</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Start with a simple request. Admissions will confirm the details before enrollment is finalized.
+              </p>
+            </figcaption>
+          </Card>
           <Card className="mt-6 bg-academyNavy p-5 text-white">
             <h2 className="text-lg font-bold">Student accounts are coming soon</h2>
             <p className="mt-2 text-sm leading-6 text-white/75">
