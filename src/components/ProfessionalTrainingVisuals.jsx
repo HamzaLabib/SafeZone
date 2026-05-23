@@ -5,21 +5,33 @@ const trainingVisuals = [
   {
     title: 'Security Guard Training',
     text: 'Structured preparation for professional site awareness, observation, and conduct.',
-    image: '/training-images/security-officer-male.jpg',
-    alt: 'Male private security officer in a dark uniform holding a training folder in a classroom setting',
+    image: '/training-images/Security%20indoor.png',
+    alt: 'Safe Zone security officer standing inside a professional facility corridor',
   },
   {
     title: 'Professional Readiness',
     text: 'Course support built around confidence, communication, and workplace expectations.',
-    image: '/training-images/security-officer-female.jpg',
-    alt: 'Female private security officer in a dark uniform reviewing training material in a classroom setting',
+    image: '/training-images/Securities%20on%20Camera%20.png',
+    alt: 'Safe Zone security team reviewing surveillance cameras during professional training',
   },
   {
     title: 'Workplace Safety & Awareness',
     text: 'Scenario-focused learning for safer teams, facilities, and public-facing environments.',
-    image: '/training-images/security-training-team.jpg',
-    alt: 'Diverse security training team reviewing safety procedures with an instructor',
+    image: '/training-images/Securities%20indoor.png',
+    alt: 'Safe Zone security officers monitoring an indoor transit environment',
   },
+  // {
+  //   title: 'Mobile Patrol Presence',
+  //   text: 'Field-focused training for visible patrol, professionalism, and site presence.',
+  //   image: '/training-images/Security%20outdoor.png',
+  //   alt: 'Safe Zone security officer standing in an outdoor patrol setting',
+  // },
+  // {
+  //   title: 'Public-Facing Security',
+  //   text: 'Preparation for calm, observant, and respectful work in public environments.',
+  //   image: '/training-images/Security%20on%20Street.png',
+  //   alt: 'Safe Zone security officer standing on a street in uniform',
+  // },
 ];
 
 export function ProfessionalTrainingVisuals() {

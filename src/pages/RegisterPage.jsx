@@ -156,8 +156,8 @@ export function RegisterPage() {
           </p>
           <Card as="figure" className="mt-6 overflow-hidden">
             <img
-              src="/training-images/security-officer-female.jpg"
-              alt="Female private security officer reviewing academy training material before registration"
+              src="/training-images/Security%20indoor.png"
+              alt="Safe Zone security officer standing inside a professional facility before registration"
               className="aspect-[4/3] w-full object-cover"
             />
             <figcaption className="p-5">

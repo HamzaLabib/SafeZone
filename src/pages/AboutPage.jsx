@@ -31,8 +31,8 @@ export function AboutPage() {
         </div>
         <Card className="overflow-hidden bg-academyNavy text-white">
           <img
-            src="/training-images/security-training-team.jpg"
-            alt="Diverse security training team reviewing procedures in a professional academy classroom"
+            src="/training-images/Security%20outdoor.png"
+            alt="Safe Zone security officer standing in an outdoor patrol setting"
             className="aspect-[16/10] w-full object-cover"
           />
           <div className="p-6 md:p-8">
