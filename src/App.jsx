@@ -7,13 +7,12 @@ import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { CourseDetailsPage } from './pages/CourseDetailsPage';
 import { CoursesPage } from './pages/CoursesPage';
-import { DashboardPage } from './pages/DashboardPage';
 import { FAQPage } from './pages/FAQPage';
 import { HomePage } from './pages/HomePage';
-import { LoginPage } from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { StaticInfoPage } from './pages/StaticInfoPage';
+import { ThankYouPage } from './pages/ThankYouPage';
 
 export default function App() {
   return (
@@ -26,11 +25,10 @@ export default function App() {
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CourseDetailsPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/privacy" element={<StaticInfoPage type="privacy" />} />
         <Route path="/terms" element={<StaticInfoPage type="terms" />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />

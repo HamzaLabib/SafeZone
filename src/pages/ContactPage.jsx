@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
@@ -40,6 +41,7 @@ function validate(values) {
 }
 
 export function ContactPage() {
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [formMessage, setFormMessage] = useState(null);
@@ -87,11 +89,7 @@ export function ContactPage() {
         return;
       }
 
-      setValues(initialValues);
-      setFormMessage({
-        type: 'success',
-        text: result.message || 'Contact message submitted successfully.',
-      });
+      navigate('/thank-you');
     } catch {
       setFormMessage({
         type: 'error',

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { businessInfo, futureFeatures } from '../data/business';
+import { businessInfo } from '../data/business';
 import { Button } from './ui/Button';
 
 const quickLinks = [
@@ -7,7 +7,6 @@ const quickLinks = [
   { label: 'About Us', to: '/about' },
   { label: 'Courses', to: '/courses' },
   { label: 'Register', to: '/register' },
-  { label: 'Student Portal', to: '/login' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' },
 ];
@@ -60,9 +59,8 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="mb-2 font-semibold">Future-Ready</h4>
-          <p className="text-sm text-white/80">The current launch version is built for course discovery and lead generation.</p>
-          <p className="mt-2 text-xs text-white/60">{futureFeatures.slice(0, 3).join(' / ')}</p>
+          <h4 className="mb-2 font-semibold">Admissions</h4>
+          <p className="text-sm text-white/80">The current launch version is built for course discovery and registration interest.</p>
           <Button to="/contact" className="mt-4">
             Contact Admissions
           </Button>

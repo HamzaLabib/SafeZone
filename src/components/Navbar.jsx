@@ -10,7 +10,6 @@ const navLinks = [
   { label: 'About', to: '/about' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' },
-  { label: 'Student Portal', to: '/login' },
 ];
 
 function navClass({ isActive }) {
