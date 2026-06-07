@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
@@ -46,6 +46,7 @@ function validate(values) {
 }
 
 export function RegisterPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const selectedFromUrl = searchParams.get('course') || '';
   const initialCourse = useMemo(
@@ -126,11 +127,7 @@ export function RegisterPage() {
         return;
       }
 
-      setValues({ ...initialValues, course: initialCourse });
-      setFormMessage({
-        type: 'success',
-        text: result.message || 'Registration interest submitted successfully.',
-      });
+      navigate('/thank-you');
     } catch {
       setFormMessage({
         type: 'error',
@@ -166,15 +163,6 @@ export function RegisterPage() {
                 Start with a simple request. Admissions will confirm the details before enrollment is finalized.
               </p>
             </figcaption>
-          </Card>
-          <Card className="mt-6 bg-academyNavy p-5 text-white">
-            <h2 className="text-lg font-bold">Student accounts are coming soon</h2>
-            <p className="mt-2 text-sm leading-6 text-white/75">
-              This launch version collects course interest only. Real accounts, dashboards, and certificates require backend authentication before launch.
-            </p>
-            <Button to="/login" className="mt-4" variant="secondary">
-              View Portal Status
-            </Button>
           </Card>
         </section>
         <Card as="section" className="p-6">
