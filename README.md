@@ -2,7 +2,7 @@
 
 React + Tailwind + React Router frontend prepared for Vercel deployment.
 
-This is currently a brochure and lead-generation website with a minimal backend for registration/contact submissions. There is no authentication, student portal backend, payment processing, or admin dashboard connected yet.
+This is currently a brochure and lead-generation website with MongoDB-backed registration/contact submissions, Resend admin notifications, and a simple password-protected admin dashboard. There is no student portal backend, payment processing, or student authentication connected yet.
 
 ## Local development
 1. `npm install`
@@ -23,10 +23,16 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - `ADMIN_NOTIFICATION_EMAIL`: admissions/admin inbox for new submissions.
 - `EMAIL_FROM`: verified sender address for email notifications.
 - `RESEND_API_KEY`: Resend API key for email delivery.
+- `ADMIN_PASSWORD`: temporary password for `/admin/login`.
 
 ## API routes
 - `POST /api/register-interest`
 - `POST /api/contact`
+- `GET /api/admin/login`
+- `POST /api/admin/login`
+- `POST /api/admin/logout`
+- `GET /api/admin/dashboard-data`
+- `POST /api/admin/update-lead-status`
 
 ## Routes
 - `/`
@@ -40,6 +46,8 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - `/faq`
 - `/privacy`
 - `/terms`
+- `/admin/login`
+- `/admin/dashboard`
 - `*` renders a 404 page
 
 ## Vercel SPA fallback
@@ -48,6 +56,7 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 ## Launch notes
 - Configure MongoDB and Resend environment variables before live launch.
 - Replace any unconfirmed business contact details before showing users.
+- Replace the temporary admin password approach with proper role-based authentication before handing access to staff.
 - Add real authentication before enabling student dashboard features.
 - Add real schedules, pricing, and payment integration only when confirmed by the business.
 

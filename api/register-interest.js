@@ -52,7 +52,7 @@ export default async function handler(request, response) {
   const document = {
     ...data,
     source: 'website',
-    status: 'new',
+    status: 'New',
     notificationStatus: 'pending',
     createdAt,
     userAgent: getUserAgent(request),
@@ -99,7 +99,9 @@ export default async function handler(request, response) {
             notificationSentAt: new Date(),
           },
         },
-      );
+      ).catch((statusError) => {
+        console.error('registration notification status update failed', statusError);
+      });
     } catch (emailError) {
       await db.collection('registrationLeads').updateOne(
         { _id: result.insertedId },
@@ -109,7 +111,9 @@ export default async function handler(request, response) {
             notificationFailedAt: new Date(),
           },
         },
-      );
+      ).catch((statusError) => {
+        console.error('registration notification failure status update failed', statusError);
+      });
       console.error('registration notification failed', emailError);
     }
 

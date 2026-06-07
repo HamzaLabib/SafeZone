@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
+import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { AdminLoginPage } from './pages/AdminLoginPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { CourseDetailsPage } from './pages/CourseDetailsPage';
@@ -31,6 +33,8 @@ export default function App() {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/privacy" element={<StaticInfoPage type="privacy" />} />
         <Route path="/terms" element={<StaticInfoPage type="terms" />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
