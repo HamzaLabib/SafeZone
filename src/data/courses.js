@@ -1,14 +1,31 @@
+export const DEFAULT_CURRENCY = 'CAD';
+export const CONTACT_FOR_PRICING = 'Contact us for pricing';
+
+function createPaymentFields(overrides = {}) {
+  return {
+    amountCents: null,
+    currency: DEFAULT_CURRENCY,
+    displayPrice: CONTACT_FOR_PRICING,
+    stripePriceId: '',
+    cohort: 'To be confirmed',
+    active: true,
+    paymentEnabled: false,
+    ...overrides,
+  };
+}
+
 export const courses = [
   {
-    id: 'security-guard-training',
+    courseId: 'security-guard-training',
     title: 'Security Guard Training',
     duration: '40 hours',
     level: 'Beginner',
     category: 'Core Training',
     outcome: 'Security career readiness',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/security-guard-training.jpg',
     imageAlt: 'Security training students reviewing professional site procedures',
     shortDescription:
@@ -32,15 +49,16 @@ export const courses = [
     featured: true,
   },
   {
-    id: 'first-aid-cpr-level-c',
+    courseId: 'first-aid-cpr-level-c',
     title: 'First Aid & CPR (Level C)',
     duration: '16 hours',
     level: 'Certification',
     category: 'Certification',
     outcome: 'Emergency response readiness',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/first-aid-cpr-level-c.jpg',
     imageAlt: 'First aid and CPR training equipment prepared for class',
     shortDescription:
@@ -64,15 +82,16 @@ export const courses = [
     featured: true,
   },
   {
-    id: 'loss-prevention',
+    courseId: 'loss-prevention',
     title: 'Loss Prevention',
     duration: '20 hours',
     level: 'Intermediate',
     category: 'Specialized Training',
     outcome: 'Retail and site risk awareness',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/loss-prevention.jpg',
     imageAlt: 'Retail environment used for loss prevention training context',
     shortDescription:
@@ -96,15 +115,16 @@ export const courses = [
     featured: true,
   },
   {
-    id: 'security-supervisor',
+    courseId: 'security-supervisor',
     title: 'Security Supervisor Essentials',
     duration: '24 hours',
     level: 'Advanced',
     category: 'Leadership',
     outcome: 'Supervisor readiness',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/security-supervisor.jpg',
     imageAlt: 'Security supervisor planning team operations in a training setting',
     shortDescription:
@@ -128,15 +148,16 @@ export const courses = [
     featured: false,
   },
   {
-    id: 'conflict-de-escalation',
+    courseId: 'conflict-de-escalation',
     title: 'Conflict De-escalation',
     duration: '12 hours',
     level: 'Professional development',
     category: 'Professional Development',
     outcome: 'Safer communication under pressure',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/conflict-de-escalation.jpg',
     imageAlt: 'Professional group training focused on communication skills',
     shortDescription:
@@ -160,15 +181,16 @@ export const courses = [
     featured: false,
   },
   {
-    id: 'emergency-response',
+    courseId: 'emergency-response',
     title: 'Emergency Response Procedures',
     duration: '18 hours',
     level: 'Intermediate',
     category: 'Specialized Training',
     outcome: 'Site emergency readiness',
     format: 'In-person / to be confirmed',
+    location: 'To be confirmed',
     schedule: 'Contact admissions',
-    price: 'Contact us for pricing',
+    ...createPaymentFields(),
     image: '/course-images/emergency-response.jpg',
     imageAlt: 'Emergency response training context with medical and safety equipment',
     shortDescription:
@@ -193,8 +215,27 @@ export const courses = [
   },
 ];
 
+export function hasConfirmedPrice(course) {
+  return Number.isInteger(course?.amountCents) && course.amountCents > 0;
+}
+
+export function hasConfirmedSchedule(course) {
+  return Boolean(course?.schedule && course.schedule !== 'Contact admissions' && course?.cohort !== 'To be confirmed');
+}
+
+export function isCoursePaymentReady(course) {
+  return Boolean(
+    course?.active &&
+      course?.paymentEnabled &&
+      hasConfirmedPrice(course) &&
+      hasConfirmedSchedule(course) &&
+      course?.stripePriceId &&
+      course?.currency,
+  );
+}
+
 export function getCourseById(courseId) {
-  return courses.find((course) => course.id === courseId);
+  return courses.find((course) => course.courseId === courseId);
 }
 
 export function getFeaturedCourses() {

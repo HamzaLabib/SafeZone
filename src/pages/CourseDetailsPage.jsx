@@ -113,10 +113,10 @@ export function CourseDetailsPage() {
             </div>
             <div className="flex justify-between gap-4">
               <dt className="font-semibold text-slate-500">Price</dt>
-              <dd className="text-right font-bold text-slate-950">{course.price}</dd>
+              <dd className="text-right font-bold text-slate-950">{course.displayPrice}</dd>
             </div>
           </dl>
-          <Button to={`/register?course=${course.id}`} className="mt-6 w-full">
+          <Button to={`/register?course=${course.courseId}`} className="mt-6 w-full">
             Register Interest
           </Button>
           <Button to="/contact" variant="outline" className="mt-3 w-full">

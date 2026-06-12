@@ -8,6 +8,7 @@ function serializeDocument(document) {
     ...document,
     _id: document._id instanceof ObjectId ? document._id.toString() : String(document._id),
     createdAt: document.createdAt instanceof Date ? document.createdAt.toISOString() : document.createdAt,
+    updatedAt: document.updatedAt instanceof Date ? document.updatedAt.toISOString() : document.updatedAt,
     notificationSentAt:
       document.notificationSentAt instanceof Date ? document.notificationSentAt.toISOString() : document.notificationSentAt,
     notificationFailedAt:
@@ -35,15 +36,17 @@ export default async function handler(request, response) {
 
   try {
     const db = await getDatabase();
-    const [registrationLeads, contactMessages] = await Promise.all([
+    const [registrationLeads, contactMessages, orderRequests] = await Promise.all([
       db.collection('registrationLeads').find({}).sort({ createdAt: -1 }).limit(500).toArray(),
       db.collection('contactMessages').find({}).sort({ createdAt: -1 }).limit(500).toArray(),
+      db.collection('orderRequests').find({}).sort({ createdAt: -1 }).limit(500).toArray(),
     ]);
 
     sendJson(response, 200, {
       ok: true,
       registrationLeads: registrationLeads.map(serializeDocument),
       contactMessages: contactMessages.map(serializeDocument),
+      orderRequests: orderRequests.map(serializeDocument),
     });
   } catch (error) {
     console.error('admin dashboard data failed', error);

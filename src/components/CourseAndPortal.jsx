@@ -20,7 +20,7 @@ export function CourseAndPortal() {
       />
       <div className="grid gap-4 md:grid-cols-3">
         {featuredCourses.map((course) => (
-          <CourseCard key={course.id} course={course} />
+          <CourseCard key={course.courseId} course={course} />
         ))}
       </div>
     </section>

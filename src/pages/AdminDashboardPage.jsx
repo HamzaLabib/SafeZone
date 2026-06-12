@@ -1,4 +1,4 @@
-import { Inbox, LogOut, RefreshCcw, Search, UsersRound } from 'lucide-react';
+import { CreditCard, Inbox, LogOut, RefreshCcw, Search, ShoppingBag, UsersRound } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Seo } from '../components/Seo';
@@ -7,6 +7,8 @@ import { Card } from '../components/ui/Card';
 import { InputField, SelectField } from '../components/ui/FormField';
 
 const leadStatuses = ['New', 'Contacted', 'Registered', 'Not Interested'];
+const paymentStatuses = ['unpaid', 'pending', 'paid', 'failed', 'refunded'];
+const orderStatuses = ['New', 'Contacted', 'Quoted', 'Confirmed', 'Fulfilled', 'Cancelled'];
 
 function normalizeStatus(status) {
   if (!status) return 'New';
@@ -22,6 +24,33 @@ function formatDate(value) {
   }).format(new Date(value));
 }
 
+function formatMoney(amountCents, currency = 'CAD') {
+  if (!Number.isInteger(amountCents)) return '-';
+
+  return new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency,
+  }).format(amountCents / 100);
+}
+
+function normalizePaymentStatus(status) {
+  return paymentStatuses.includes(status) ? status : 'unpaid';
+}
+
+function normalizeOrderStatus(status) {
+  return orderStatuses.includes(status) ? status : 'New';
+}
+
+function formatFulfillmentPreference(value) {
+  const labels = {
+    pickup: 'Pickup',
+    shipping: 'Shipping',
+    either: 'Either',
+  };
+
+  return labels[value] || value || '-';
+}
+
 function includesQuery(record, query) {
   if (!query) return true;
   const haystack = [
@@ -30,6 +59,13 @@ function includesQuery(record, query) {
     record.email,
     record.phone,
     record.courseInterest,
+    record.selectedCourseId,
+    record.selectedCourseTitle,
+    record.productId,
+    record.productTitle,
+    record.sku,
+    record.category,
+    record.paymentStatus,
     record.subject,
     record.message,
     normalizeStatus(record.status),
@@ -45,11 +81,13 @@ export function AdminDashboardPage() {
   const navigate = useNavigate();
   const [registrationLeads, setRegistrationLeads] = useState([]);
   const [contactMessages, setContactMessages] = useState([]);
+  const [orderRequests, setOrderRequests] = useState([]);
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState('');
+  const [updatingOrderId, setUpdatingOrderId] = useState('');
 
   async function loadDashboardData() {
     setIsLoading(true);
@@ -71,6 +109,7 @@ export function AdminDashboardPage() {
 
       setRegistrationLeads(result.registrationLeads || []);
       setContactMessages(result.contactMessages || []);
+      setOrderRequests(result.orderRequests || []);
     } catch {
       setError('Could not reach the admin dashboard service.');
     } finally {
@@ -99,6 +138,20 @@ export function AdminDashboardPage() {
         return includesQuery(message, query) && (!statusFilter || status === statusFilter);
       }),
     [contactMessages, query, statusFilter],
+  );
+
+  const filteredOrderRequests = useMemo(
+    () => orderRequests.filter((orderRequest) => includesQuery(orderRequest, query)),
+    [orderRequests, query],
+  );
+
+  const paymentStatusCounts = useMemo(
+    () =>
+      paymentStatuses.reduce((counts, status) => {
+        counts[status] = registrationLeads.filter((lead) => normalizePaymentStatus(lead.paymentStatus) === status).length;
+        return counts;
+      }, {}),
+    [registrationLeads],
   );
 
   async function updateLeadStatus(id, status) {
@@ -135,6 +188,40 @@ export function AdminDashboardPage() {
     }
   }
 
+  async function updateOrderStatus(id, status) {
+    setUpdatingOrderId(id);
+    setError('');
+
+    try {
+      const response = await fetch('/api/admin/update-order-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status }),
+      });
+      const result = await response.json();
+
+      if (response.status === 401) {
+        navigate('/admin/login', { replace: true });
+        return;
+      }
+
+      if (!response.ok || !result.ok) {
+        setError(result.error || 'Could not update order request status.');
+        return;
+      }
+
+      setOrderRequests((current) =>
+        current.map((orderRequest) => (orderRequest._id === id ? { ...orderRequest, status } : orderRequest)),
+      );
+    } catch {
+      setError('Could not reach the order status update service.');
+    } finally {
+      setUpdatingOrderId('');
+    }
+  }
+
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' });
     navigate('/admin/login', { replace: true });
@@ -152,7 +239,7 @@ export function AdminDashboardPage() {
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-200">Admin dashboard</p>
             <h1 className="mt-2 text-3xl font-extrabold">Form submissions</h1>
             <p className="mt-2 text-sm leading-6 text-white/75">
-              Review registration leads, contact messages, notification status, and lead follow-up status.
+              Review registration leads, market requests, contact messages, notification status, and payment readiness.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -167,11 +254,25 @@ export function AdminDashboardPage() {
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 md:grid-cols-2">
+        <section className="mt-6 grid gap-4 md:grid-cols-4">
           <Card className="p-5">
             <UsersRound className="h-6 w-6 text-academyBlue" aria-hidden="true" />
             <p className="mt-3 text-3xl font-extrabold text-slate-950">{registrationLeads.length}</p>
             <p className="text-sm font-semibold text-slate-600">Registration leads</p>
+          </Card>
+          <Card className="p-5">
+            <CreditCard className="h-6 w-6 text-academyBlue" aria-hidden="true" />
+            <p className="mt-3 text-3xl font-extrabold text-slate-950">{paymentStatusCounts.unpaid || 0}</p>
+            <p className="text-sm font-semibold text-slate-600">Unpaid registrations</p>
+            <p className="mt-2 text-xs text-slate-500">
+              Pending {paymentStatusCounts.pending || 0} / Paid {paymentStatusCounts.paid || 0} / Failed{' '}
+              {paymentStatusCounts.failed || 0} / Refunded {paymentStatusCounts.refunded || 0}
+            </p>
+          </Card>
+          <Card className="p-5">
+            <ShoppingBag className="h-6 w-6 text-academyBlue" aria-hidden="true" />
+            <p className="mt-3 text-3xl font-extrabold text-slate-950">{orderRequests.length}</p>
+            <p className="text-sm font-semibold text-slate-600">Market requests</p>
           </Card>
           <Card className="p-5">
             <Inbox className="h-6 w-6 text-academyBlue" aria-hidden="true" />
@@ -187,7 +288,7 @@ export function AdminDashboardPage() {
               label="Search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Name, email, phone, course, subject, or status"
+              placeholder="Name, email, phone, course, item, subject, or status"
             />
             <SelectField
               id="admin-status-filter"
@@ -205,7 +306,8 @@ export function AdminDashboardPage() {
           </div>
           <p className="mt-3 flex items-center gap-2 text-sm text-slate-500">
             <Search className="h-4 w-4" aria-hidden="true" />
-            Showing {filteredLeads.length} leads and {filteredMessages.length} messages.
+            Showing {filteredLeads.length} leads, {filteredOrderRequests.length} market requests, and{' '}
+            {filteredMessages.length} messages.
           </p>
         </Card>
 
@@ -214,13 +316,15 @@ export function AdminDashboardPage() {
         <section className="mt-8">
           <h2 className="text-2xl font-extrabold text-slate-950">Registration Leads</h2>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200 bg-white">
-            <table className="min-w-[1100px] w-full text-left text-sm">
+            <table className="min-w-[1300px] w-full text-left text-sm">
               <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Email</th>
                   <th className="px-4 py-3">Phone</th>
                   <th className="px-4 py-3">Course</th>
+                  <th className="px-4 py-3">Payment</th>
+                  <th className="px-4 py-3">Amount</th>
                   <th className="px-4 py-3">Message</th>
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Created</th>
@@ -233,7 +337,13 @@ export function AdminDashboardPage() {
                     <td className="px-4 py-3 font-semibold text-slate-950">{lead.fullName || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{lead.email || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{lead.phone || '-'}</td>
-                    <td className="px-4 py-3 text-slate-600">{lead.courseInterest || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{lead.selectedCourseTitle || lead.courseInterest || '-'}</td>
+                    <td className="px-4 py-3">
+                      <span className="rounded bg-slate-100 px-2 py-1 text-xs font-bold uppercase text-slate-700">
+                        {normalizePaymentStatus(lead.paymentStatus)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{formatMoney(lead.amountCents, lead.currency)}</td>
                     <td className="max-w-xs px-4 py-3 text-slate-600">{lead.message || '-'}</td>
                     <td className="px-4 py-3">
                       <select
@@ -255,8 +365,86 @@ export function AdminDashboardPage() {
                 ))}
                 {!isLoading && filteredLeads.length === 0 && (
                   <tr>
-                    <td className="px-4 py-6 text-center text-slate-500" colSpan="8">
+                    <td className="px-4 py-6 text-center text-slate-500" colSpan="10">
                       No registration leads match the current filters.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mt-8">
+          <h2 className="text-2xl font-extrabold text-slate-950">Market Requests</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            These are request-to-order submissions only. Staff must confirm final price, taxes, availability, and pickup or
+            shipping before treating any request as a purchase.
+          </p>
+          <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200 bg-white">
+            <table className="min-w-[1300px] w-full text-left text-sm">
+              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <tr>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">Email</th>
+                  <th className="px-4 py-3">Phone</th>
+                  <th className="px-4 py-3">Item</th>
+                  <th className="px-4 py-3">SKU</th>
+                  <th className="px-4 py-3">Qty</th>
+                  <th className="px-4 py-3">Fulfillment</th>
+                  <th className="px-4 py-3">Payment</th>
+                  <th className="px-4 py-3">Listed Price</th>
+                  <th className="px-4 py-3">Message</th>
+                  <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3">Created</th>
+                  <th className="px-4 py-3">Notification</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {filteredOrderRequests.map((orderRequest) => (
+                  <tr key={orderRequest._id} className="align-top">
+                    <td className="px-4 py-3 font-semibold text-slate-950">{orderRequest.fullName || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{orderRequest.email || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{orderRequest.phone || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{orderRequest.productTitle || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{orderRequest.sku || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">{orderRequest.quantity || '-'}</td>
+                    <td className="px-4 py-3 text-slate-600">
+                      {formatFulfillmentPreference(orderRequest.fulfillmentPreference)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="rounded bg-slate-100 px-2 py-1 text-xs font-bold uppercase text-slate-700">
+                        {normalizePaymentStatus(orderRequest.paymentStatus)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">
+                      {formatMoney(orderRequest.amountCents, orderRequest.currency) === '-'
+                        ? orderRequest.displayPrice || '-'
+                        : formatMoney(orderRequest.amountCents, orderRequest.currency)}
+                    </td>
+                    <td className="max-w-xs px-4 py-3 text-slate-600">{orderRequest.message || '-'}</td>
+                    <td className="px-4 py-3">
+                      <select
+                        className="w-40 rounded-lg border border-slate-300 px-3 py-2 font-semibold text-slate-700 outline-none focus:border-academyBlue focus:ring-2 focus:ring-blue-100"
+                        value={normalizeOrderStatus(orderRequest.status)}
+                        disabled={updatingOrderId === orderRequest._id}
+                        onChange={(event) => updateOrderStatus(orderRequest._id, event.target.value)}
+                      >
+                        {orderStatuses.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{formatDate(orderRequest.createdAt)}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-700">{orderRequest.notificationStatus || '-'}</td>
+                  </tr>
+                ))}
+                {!isLoading && filteredOrderRequests.length === 0 && (
+                  <tr>
+                    <td className="px-4 py-6 text-center text-slate-500" colSpan="13">
+                      No market requests match the current search.
                     </td>
                   </tr>
                 )}
