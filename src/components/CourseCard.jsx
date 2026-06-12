@@ -5,7 +5,7 @@ import { useLogoFallback } from '../utils/imageFallback';
 export function CourseCard({ course }) {
   return (
     <Link
-      to={`/courses/${course.id}`}
+      to={`/courses/${course.courseId}`}
       className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-academyBlue/50 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-academyBlue focus:ring-offset-2"
     >
       <img

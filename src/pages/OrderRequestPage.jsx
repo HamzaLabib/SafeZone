@@ -4,14 +4,18 @@ import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CheckboxField, InputField, SelectField, TextareaField } from '../components/ui/FormField';
-import { courses } from '../data/courses';
+import { getActiveProducts } from '../data/products';
+
+const REQUEST_NOTICE =
+  'Submitting a request is not a purchase. Final price, taxes, availability, and pickup or shipping will be confirmed by the academy.';
 
 const initialValues = {
   name: '',
   email: '',
   phone: '',
-  course: '',
-  contactMethod: 'email',
+  product: '',
+  quantity: '1',
+  fulfillmentPreference: 'pickup',
   message: '',
   consent: false,
   website: '',
@@ -19,6 +23,7 @@ const initialValues = {
 
 function validate(values) {
   const errors = {};
+  const quantity = Number.parseInt(values.quantity, 10);
 
   if (!values.name.trim()) {
     errors.name = 'Enter your full name.';
@@ -34,33 +39,42 @@ function validate(values) {
     errors.phone = 'Enter your phone number.';
   }
 
-  if (!values.course) {
-    errors.course = 'Choose a course of interest.';
+  if (!values.product) {
+    errors.product = 'Choose an item.';
+  }
+
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+    errors.quantity = 'Enter a quantity from 1 to 99.';
+  }
+
+  if (!values.fulfillmentPreference) {
+    errors.fulfillmentPreference = 'Choose a fulfillment preference.';
   }
 
   if (!values.consent) {
-    errors.consent = 'Consent is required before admissions can contact you.';
+    errors.consent = 'Consent is required before the academy can contact you.';
   }
 
   return errors;
 }
 
-export function RegisterPage() {
+export function OrderRequestPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const selectedFromUrl = searchParams.get('course') || '';
-  const initialCourse = useMemo(
-    () => (courses.some((course) => course.courseId === selectedFromUrl) ? selectedFromUrl : ''),
-    [selectedFromUrl],
+  const products = getActiveProducts();
+  const selectedFromUrl = searchParams.get('product') || '';
+  const initialProduct = useMemo(
+    () => (products.some((product) => product.productId === selectedFromUrl) ? selectedFromUrl : ''),
+    [products, selectedFromUrl],
   );
-  const [values, setValues] = useState({ ...initialValues, course: initialCourse });
+  const [values, setValues] = useState({ ...initialValues, product: initialProduct });
   const [errors, setErrors] = useState({});
   const [formMessage, setFormMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setValues((current) => ({ ...current, course: initialCourse || current.course }));
-  }, [initialCourse]);
+    setValues((current) => ({ ...current, product: initialProduct || current.product }));
+  }, [initialProduct]);
 
   function handleChange(event) {
     const { name, type, checked, value } = event.target;
@@ -75,10 +89,8 @@ export function RegisterPage() {
 
   function mapServerErrors(serverErrors = {}) {
     const fieldMap = {
+      productId: 'product',
       fullName: 'name',
-      selectedCourseId: 'course',
-      courseInterest: 'course',
-      preferredContactMethod: 'contactMethod',
     };
 
     return Object.entries(serverErrors).reduce((nextErrors, [key, value]) => {
@@ -100,8 +112,8 @@ export function RegisterPage() {
     setFormMessage(null);
 
     try {
-      const selectedCourse = courses.find((course) => course.courseId === values.course);
-      const response = await fetch('/api/register-interest', {
+      const selectedProduct = products.find((product) => product.productId === values.product);
+      const response = await fetch('/api/order-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,10 +122,10 @@ export function RegisterPage() {
           fullName: values.name,
           email: values.email,
           phone: values.phone,
-          selectedCourseId: selectedCourse?.courseId || values.course,
-          selectedCourseTitle: selectedCourse?.title || values.course,
-          courseInterest: selectedCourse?.title || values.course,
-          preferredContactMethod: values.contactMethod,
+          productId: selectedProduct?.productId || values.product,
+          productTitle: selectedProduct?.title || values.product,
+          quantity: Number.parseInt(values.quantity, 10),
+          fulfillmentPreference: values.fulfillmentPreference,
           message: values.message,
           consent: values.consent,
           website: values.website,
@@ -144,34 +156,26 @@ export function RegisterPage() {
   return (
     <>
       <Seo
-        title="Register Interest"
-        description="Submit a Safe Zone Security Academy course registration request and connect with admissions for schedule, pricing, and enrollment next steps."
+        title="Request an Item"
+        description="Submit a Safe Zone Security Academy shop request for books, materials, equipment, accessories, or bundles."
       />
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:px-8 lg:grid-cols-[0.9fr_1.1fr]">
         <section>
-          <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Register interest</p>
-          <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Start your security training journey.</h1>
+          <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Request to order</p>
+          <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Request shop items from the academy.</h1>
           <p className="mt-4 leading-7 text-slate-600">
-            Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps.
+            Send your item request and the academy will confirm price, taxes, availability, and pickup or shipping details before
+            any purchase is finalized.
           </p>
-          <Card as="figure" className="mt-6 overflow-hidden">
-            <img
-              src="/training-images/Security%20indoor.png"
-              alt="Safe Zone security officer standing inside a professional facility before registration"
-              className="aspect-[4/3] w-full object-cover"
-            />
-            <figcaption className="p-5">
-              <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Professional readiness</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
-                Start with a simple request. Admissions will confirm the details before enrollment is finalized.
-              </p>
-            </figcaption>
+          <Card className="mt-6 p-5">
+            <p className="text-sm font-semibold text-blue-900">{REQUEST_NOTICE}</p>
           </Card>
         </section>
+
         <Card as="section" className="p-6">
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
             <InputField
-              id="register-name"
+              id="order-name"
               label="Full name"
               name="name"
               autoComplete="name"
@@ -180,7 +184,7 @@ export function RegisterPage() {
               onChange={handleChange}
             />
             <InputField
-              id="register-email"
+              id="order-email"
               label="Email"
               name="email"
               type="email"
@@ -190,7 +194,7 @@ export function RegisterPage() {
               onChange={handleChange}
             />
             <InputField
-              id="register-phone"
+              id="order-phone"
               label="Phone"
               name="phone"
               type="tel"
@@ -200,43 +204,55 @@ export function RegisterPage() {
               onChange={handleChange}
             />
             <SelectField
-              id="register-course"
-              label="Course of interest"
-              name="course"
-              value={values.course}
-              error={errors.course}
+              id="order-product"
+              label="Item"
+              name="product"
+              value={values.product}
+              error={errors.product}
               onChange={handleChange}
             >
-              <option value="">Choose a course</option>
-              {courses.map((course) => (
-                <option key={course.courseId} value={course.courseId}>
-                  {course.title}
+              <option value="">Choose an item</option>
+              {products.map((product) => (
+                <option key={product.productId} value={product.productId}>
+                  {product.title}
                 </option>
               ))}
             </SelectField>
+            <InputField
+              id="order-quantity"
+              label="Quantity"
+              name="quantity"
+              type="number"
+              min="1"
+              max="99"
+              value={values.quantity}
+              error={errors.quantity}
+              onChange={handleChange}
+            />
             <SelectField
-              id="register-contact-method"
-              label="Preferred contact method"
-              name="contactMethod"
-              value={values.contactMethod}
+              id="order-fulfillment"
+              label="Fulfillment preference"
+              name="fulfillmentPreference"
+              value={values.fulfillmentPreference}
+              error={errors.fulfillmentPreference}
               onChange={handleChange}
             >
-              <option value="email">Email</option>
-              <option value="phone">Phone</option>
-              <option value="either">Either email or phone</option>
+              <option value="pickup">Pickup</option>
+              <option value="shipping">Shipping</option>
+              <option value="either">Either pickup or shipping</option>
             </SelectField>
             <TextareaField
-              id="register-message"
+              id="order-message"
               label="Message / notes"
               name="message"
               autoComplete="off"
-              placeholder="Tell us about your goals, availability, or questions."
+              placeholder="Tell us about sizing, preferred pickup timing, shipping questions, or item details."
               value={values.message}
               onChange={handleChange}
             />
             <CheckboxField
-              id="register-consent"
-              label="I agree to be contacted about my registration request."
+              id="order-consent"
+              label="I agree to be contacted about this item request."
               name="consent"
               checked={values.consent}
               error={errors.consent}
@@ -252,7 +268,7 @@ export function RegisterPage() {
               aria-hidden="true"
             />
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit Registration Request'}
+              {isSubmitting ? 'Submitting...' : 'Submit Item Request'}
             </Button>
             {formMessage && (
               <p
