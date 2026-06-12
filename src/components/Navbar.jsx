@@ -46,7 +46,7 @@ export function Navbar() {
           ))}
         </nav>
         <Button to="/register" className="hidden lg:inline-flex">
-          Register Now
+          Register Interest
         </Button>
         <button
           className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-white/20 text-white transition hover:bg-white/10 lg:hidden"
@@ -66,7 +66,7 @@ export function Navbar() {
             </NavLink>
           ))}
           <Button to="/register" className="mt-2" onClick={() => setIsOpen(false)}>
-            Register Now
+            Register Interest
           </Button>
         </nav>
       )}

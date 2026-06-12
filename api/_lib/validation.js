@@ -49,6 +49,7 @@ export function validateContact(body) {
     phone: cleanString(body.phone, 60),
     subject: cleanString(body.subject, 160),
     message: cleanString(body.message, 3000),
+    consent: body.consent === true,
   };
   const errors = {};
 
@@ -57,6 +58,7 @@ export function validateContact(body) {
   if (data.email && !isValidEmail(data.email)) errors.email = 'Enter a valid email address.';
   if (!data.subject) errors.subject = 'Subject is required.';
   if (!data.message) errors.message = 'Message is required.';
+  if (!data.consent) errors.consent = 'Consent must be accepted.';
 
   return { data, errors };
 }

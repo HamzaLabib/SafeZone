@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { InputField, TextareaField } from '../components/ui/FormField';
+import { CheckboxField, InputField, TextareaField } from '../components/ui/FormField';
 import { businessInfo } from '../data/business';
 
 const initialValues = {
@@ -13,6 +13,7 @@ const initialValues = {
   phone: '',
   subject: '',
   message: '',
+  consent: false,
   website: '',
 };
 
@@ -37,6 +38,10 @@ function validate(values) {
     errors.message = 'Enter your message.';
   }
 
+  if (!values.consent) {
+    errors.consent = 'Consent is required before admissions can contact you.';
+  }
+
   return errors;
 }
 
@@ -48,8 +53,8 @@ export function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleChange(event) {
-    const { name, value } = event.target;
-    setValues((current) => ({ ...current, [name]: value }));
+    const { name, type, checked, value } = event.target;
+    setValues((current) => ({ ...current, [name]: type === 'checkbox' ? checked : value }));
     setErrors((current) => {
       const nextErrors = { ...current };
       delete nextErrors[name];
@@ -182,6 +187,18 @@ export function ContactPage() {
               error={errors.message}
               onChange={handleChange}
             />
+            <CheckboxField
+              id="contact-consent"
+              label="I agree that Safe Zone Security Academy may store my submission and contact me about this inquiry."
+              name="consent"
+              checked={values.consent}
+              error={errors.consent}
+              onChange={handleChange}
+            />
+            <p className="text-xs leading-5 text-slate-500">
+              Your form details may be stored in the academy's website database and admin tools so staff can respond. Online
+              payments are not processed through this form.
+            </p>
             <input
               className="hidden"
               name="website"

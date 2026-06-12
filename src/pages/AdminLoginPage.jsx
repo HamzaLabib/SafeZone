@@ -88,7 +88,9 @@ export function AdminLoginPage() {
               Admin access
             </p>
             <h1 className="mt-4 text-3xl font-extrabold">Safe Zone Admin</h1>
-            <p className="mt-3 leading-7 text-white/75">Sign in to review registration leads and contact messages.</p>
+            <p className="mt-3 leading-7 text-white/75">
+              Sign in to review registration leads, item requests, and contact messages during preview operations.
+            </p>
           </section>
           <form className="grid gap-4 p-6" onSubmit={handleSubmit} noValidate>
             <InputField

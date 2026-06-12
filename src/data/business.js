@@ -4,7 +4,7 @@ export const businessInfo = {
   email: 'info@safezonesecurityacademy.ca',
   location: 'Montreal, QC, Canada',
   serviceArea: 'Quebec',
-  phoneDisplay: 'Phone number to be confirmed',
+  phoneDisplay: 'Phone coming soon',
   phoneHref: '',
   baseUrl: 'https://safezonesecurityacademy.ca',
 };

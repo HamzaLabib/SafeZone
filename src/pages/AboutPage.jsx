@@ -31,7 +31,7 @@ export function AboutPage() {
         </div>
         <Card className="overflow-hidden bg-academyNavy text-white">
           <img
-            src="/training-images/Security%20outdoor.png"
+            src="/training-images/security-outdoor.png"
             alt="Safe Zone security officer standing in an outdoor patrol setting"
             className="aspect-[16/10] w-full object-cover"
           />

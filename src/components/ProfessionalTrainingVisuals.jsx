@@ -5,31 +5,31 @@ const trainingVisuals = [
   {
     title: 'Security Guard Training',
     text: 'Structured preparation for professional site awareness, observation, and conduct.',
-    image: '/training-images/Security%20indoor.png',
+    image: '/training-images/security-indoor.png',
     alt: 'Safe Zone security officer standing inside a professional facility corridor',
   },
   {
     title: 'Professional Readiness',
     text: 'Course support built around confidence, communication, and workplace expectations.',
-    image: '/training-images/Securities%20on%20Camera%20.png',
+    image: '/training-images/securities-on-camera.png',
     alt: 'Safe Zone security team reviewing surveillance cameras during professional training',
   },
   {
     title: 'Workplace Safety & Awareness',
     text: 'Scenario-focused learning for safer teams, facilities, and public-facing environments.',
-    image: '/training-images/Securities%20indoor.png',
+    image: '/training-images/securities-indoor.png',
     alt: 'Safe Zone security officers monitoring an indoor transit environment',
   },
   // {
   //   title: 'Mobile Patrol Presence',
   //   text: 'Field-focused training for visible patrol, professionalism, and site presence.',
-  //   image: '/training-images/Security%20outdoor.png',
+  //   image: '/training-images/security-outdoor.png',
   //   alt: 'Safe Zone security officer standing in an outdoor patrol setting',
   // },
   // {
   //   title: 'Public-Facing Security',
   //   text: 'Preparation for calm, observant, and respectful work in public environments.',
-  //   image: '/training-images/Security%20on%20Street.png',
+  //   image: '/training-images/security-on-street.png',
   //   alt: 'Safe Zone security officer standing on a street in uniform',
   // },
 ];
