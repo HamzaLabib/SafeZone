@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -39,6 +39,7 @@ export default function App() {
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/privacy" element={<StaticInfoPage type="privacy" />} />
         <Route path="/terms" element={<StaticInfoPage type="terms" />} />
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
