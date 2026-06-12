@@ -69,6 +69,7 @@ export default async function handler(request, response) {
       Phone: data.phone,
       Subject: data.subject,
       Message: data.message,
+      Consent: data.consent ? 'Accepted' : 'Not accepted',
       Source: 'website',
       Submitted: createdAt.toISOString(),
     });
@@ -84,6 +85,7 @@ export default async function handler(request, response) {
           `Phone: ${data.phone || '-'}`,
           `Subject: ${data.subject}`,
           `Message: ${data.message}`,
+          `Consent: ${data.consent ? 'Accepted' : 'Not accepted'}`,
           `Submitted: ${createdAt.toISOString()}`,
         ].join('\n'),
       });

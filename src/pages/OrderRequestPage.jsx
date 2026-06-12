@@ -252,12 +252,16 @@ export function OrderRequestPage() {
             />
             <CheckboxField
               id="order-consent"
-              label="I agree to be contacted about this item request."
+              label="I agree that Safe Zone Security Academy may store my submission and contact me about this item request."
               name="consent"
               checked={values.consent}
               error={errors.consent}
               onChange={handleChange}
             />
+            <p className="text-xs leading-5 text-slate-500">
+              This request is not a purchase. Your details may be stored in the academy's website database and admin tools so
+              staff can confirm price, taxes, availability, and fulfillment before any sale is finalized.
+            </p>
             <input
               className="hidden"
               name="website"

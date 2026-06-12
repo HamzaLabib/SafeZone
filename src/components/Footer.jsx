@@ -7,7 +7,7 @@ const quickLinks = [
   { label: 'About Us', to: '/about' },
   { label: 'Courses', to: '/courses' },
   { label: 'Shop', to: '/shop' },
-  { label: 'Register', to: '/register' },
+  { label: 'Register Interest', to: '/register' },
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' },
 ];
@@ -61,7 +61,10 @@ export function Footer() {
         </div>
         <div>
           <h4 className="mb-2 font-semibold">Admissions</h4>
-          <p className="text-sm text-white/80">The current launch version is built for course discovery and registration interest.</p>
+          <p className="text-sm text-white/80">
+            Course registration begins with an interest request. Admissions confirms schedule, pricing, format, and next steps
+            before enrollment is finalized.
+          </p>
           <Button to="/contact" className="mt-4">
             Contact Admissions
           </Button>

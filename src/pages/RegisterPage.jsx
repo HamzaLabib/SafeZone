@@ -156,7 +156,7 @@ export function RegisterPage() {
           </p>
           <Card as="figure" className="mt-6 overflow-hidden">
             <img
-              src="/training-images/Security%20indoor.png"
+              src="/training-images/security-indoor.png"
               alt="Safe Zone security officer standing inside a professional facility before registration"
               className="aspect-[4/3] w-full object-cover"
             />
@@ -236,12 +236,16 @@ export function RegisterPage() {
             />
             <CheckboxField
               id="register-consent"
-              label="I agree to be contacted about my registration request."
+              label="I agree that Safe Zone Security Academy may store my submission and contact me about this registration interest request."
               name="consent"
               checked={values.consent}
               error={errors.consent}
               onChange={handleChange}
             />
+            <p className="text-xs leading-5 text-slate-500">
+              This is not confirmed enrollment. Your details may be stored in the academy's website database and admin tools so
+              admissions can confirm schedule, pricing, format, and next steps. No online payment is processed here.
+            </p>
             <input
               className="hidden"
               name="website"

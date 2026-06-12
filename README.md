@@ -11,7 +11,32 @@ Payment readiness notes are documented in [docs/payment-readiness.md](docs/payme
 2. `npm run dev`
 3. Open the local URL shown by Vite.
 
-For local API testing, use Vercel's local runtime (`vercel dev`) after configuring `.env`. Plain Vite dev serves the frontend only.
+Plain Vite dev serves the frontend only. For local API testing, use Vercel's local runtime (`vercel dev`) after configuring local environment variables.
+
+## Vercel preview setup
+Before creating or testing a Vercel preview deployment, configure these environment variables in the Vercel project settings for the Preview environment. Do not commit real values to GitHub.
+
+- `MONGODB_URI`: MongoDB Atlas connection string.
+- `MONGODB_DB`: database name, defaults to `safeZoneSecurityAcademy`.
+- `ADMIN_PASSWORD`: temporary preview admin password for `/admin/login`; replace before staff handoff.
+- `RESEND_API_KEY`: Resend API key for admin notification email delivery.
+- `ADMIN_NOTIFICATION_EMAIL`: recipient inbox for contact, registration interest, and item request alerts.
+- `EMAIL_FROM`: verified sender address used by Resend.
+- `STRIPE_SECRET_KEY`: future Stripe secret key; leave blank until approved test-mode payment activation.
+- `STRIPE_WEBHOOK_SECRET`: future Stripe webhook secret; leave blank until webhook activation.
+- `APP_BASE_URL`: future absolute app URL for Stripe redirects; leave blank until payment activation needs it.
+- `VITE_STRIPE_PUBLISHABLE_KEY`: future publishable key only; leave blank until frontend Stripe usage is approved.
+
+Recommended preview flow:
+
+1. Install Vercel CLI if needed: `npm install -g vercel`.
+2. Link the project: `vercel link`.
+3. Pull preview/development variables into an ignored local file: `vercel env pull .env.local`.
+4. Run `vercel dev` to test both the React frontend and `/api/*` routes locally.
+5. Use `npm run dev` only when you are testing frontend routes without serverless API execution.
+6. Use `npm run build` before pushing or promoting a preview.
+
+Additional preview QA is tracked in [docs/preview-testing-checklist.md](docs/preview-testing-checklist.md).
 
 ## Production build
 - `npm run build`
@@ -52,10 +77,9 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - `/shop/:productId`
 - `/order-request`
 - `/register`
-- `/login`
-- `/dashboard`
 - `/contact`
 - `/faq`
+- `/thank-you` (utility page, noindex)
 - `/privacy`
 - `/terms`
 - `/admin/login`
@@ -73,6 +97,9 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - Add real schedules, pricing, and Stripe Checkout integration only when confirmed by the business.
 - Keep shop requests as request-to-order only until product prices, taxes, availability, pickup/shipping, and refund policy are confirmed.
 - Use Stripe test mode and webhook signature verification before considering live mode.
+- Collect remaining owner launch content in [docs/owner-launch-content-checklist.md](docs/owner-launch-content-checklist.md).
+- Treat the current admin dashboard as preview-only; see [docs/admin-operations-readiness.md](docs/admin-operations-readiness.md).
+- Asset cleanup notes are tracked in [docs/asset-readiness.md](docs/asset-readiness.md).
 
 ## Deploy to Vercel
 1. Push project to GitHub.
