@@ -1,6 +1,7 @@
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { businessInfo } from '../data/business';
 
 const content = {
   privacy: {
@@ -29,6 +30,11 @@ const content = {
       {
         title: 'Review Status',
         text: 'This policy is not a substitute for legal advice. A final privacy review, including Quebec Law 25 requirements, retention practices, and contact information for privacy questions, is still required before public launch.',
+      },
+      {
+        title: 'Contact',
+        text: 'For privacy questions or website policy requests, email Safe Zone Security Academy at',
+        showEmail: true,
       },
     ],
   },
@@ -59,6 +65,11 @@ const content = {
         title: 'Required Final Review',
         text: 'These terms are placeholder-ready operational text for preview use. Final legal, privacy, refund, cancellation, French-language, tax, and licensing wording must be reviewed by the business owner and appropriate advisors before public launch.',
       },
+      {
+        title: 'Contact',
+        text: 'For questions about these website terms, email Safe Zone Security Academy at',
+        showEmail: true,
+      },
     ],
   },
 };
@@ -76,7 +87,21 @@ export function StaticInfoPage({ type }) {
           {page.sections.map((section) => (
             <section key={section.title}>
               <h2 className="text-xl font-bold text-slate-950">{section.title}</h2>
-              <p className="mt-2 leading-7 text-slate-600">{section.text}</p>
+              <p className="mt-2 leading-7 text-slate-600">
+                {section.text}
+                {section.showEmail && (
+                  <>
+                    {' '}
+                    <a
+                      className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+                      href={`mailto:${businessInfo.email}`}
+                    >
+                      {businessInfo.email}
+                    </a>
+                    .
+                  </>
+                )}
+              </p>
             </section>
           ))}
         </div>

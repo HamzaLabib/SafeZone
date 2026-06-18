@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { businessInfo } from '../data/business';
 import { getCourseById, isCoursePaymentReady } from '../data/courses';
 
 const PAYMENT_UNAVAILABLE_MESSAGE =
@@ -53,6 +54,16 @@ export function CheckoutPage() {
                   <Button to={registrationPath} className="mt-5">
                     Submit Registration Request
                   </Button>
+                  <p className="mt-4 text-sm leading-6 text-slate-600">
+                    Need help with this course? Email{' '}
+                    <a
+                      className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+                      href={`mailto:${businessInfo.email}`}
+                    >
+                      {businessInfo.email}
+                    </a>
+                    .
+                  </p>
                 </div>
               ) : (
                 <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">

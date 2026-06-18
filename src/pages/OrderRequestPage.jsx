@@ -4,6 +4,7 @@ import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CheckboxField, InputField, SelectField, TextareaField } from '../components/ui/FormField';
+import { businessInfo } from '../data/business';
 import { getActiveProducts } from '../data/products';
 
 const REQUEST_NOTICE =
@@ -166,6 +167,16 @@ export function OrderRequestPage() {
           <p className="mt-4 leading-7 text-slate-600">
             Send your item request and the academy will confirm price, taxes, availability, and pickup or shipping details before
             any purchase is finalized.
+          </p>
+          <p className="mt-4 text-sm leading-6 text-slate-600">
+            For item questions, email{' '}
+            <a
+              className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+              href={`mailto:${businessInfo.email}`}
+            >
+              {businessInfo.email}
+            </a>
+            .
           </p>
           <Card className="mt-6 p-5">
             <p className="text-sm font-semibold text-blue-900">{REQUEST_NOTICE}</p>
