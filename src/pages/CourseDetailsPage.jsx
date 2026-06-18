@@ -122,6 +122,16 @@ export function CourseDetailsPage() {
           <Button to="/contact" variant="outline" className="mt-3 w-full">
             Ask a Question
           </Button>
+          <p className="mt-3 text-xs leading-5 text-slate-500">
+            Course questions? Email{' '}
+            <a
+              className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+              href={`mailto:${businessInfo.email}`}
+            >
+              {businessInfo.email}
+            </a>
+            .
+          </p>
           <p className="mt-4 text-xs leading-5 text-slate-500">
             Submitting interest does not complete enrollment. Admissions must confirm details first.
           </p>

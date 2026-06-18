@@ -4,6 +4,7 @@ import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CheckboxField, InputField, SelectField, TextareaField } from '../components/ui/FormField';
+import { businessInfo } from '../data/business';
 import { courses } from '../data/courses';
 
 const initialValues = {
@@ -153,6 +154,16 @@ export function RegisterPage() {
           <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Start your security training journey.</h1>
           <p className="mt-4 leading-7 text-slate-600">
             Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps.
+          </p>
+          <p className="mt-4 text-sm leading-6 text-slate-600">
+            Prefer email? Contact admissions at{' '}
+            <a
+              className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+              href={`mailto:${businessInfo.email}`}
+            >
+              {businessInfo.email}
+            </a>
+            .
           </p>
           <Card as="figure" className="mt-6 overflow-hidden">
             <img

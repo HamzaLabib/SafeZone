@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Seo } from '../components/Seo';
+import { businessInfo } from '../data/business';
 import { faqs } from '../data/faqs';
 
 export function FAQPage() {
@@ -54,6 +55,16 @@ export function FAQPage() {
           );
         })}
       </div>
+      <p className="mt-8 text-sm leading-6 text-slate-600">
+        Still have questions? Email{' '}
+        <a
+          className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+          href={`mailto:${businessInfo.email}`}
+        >
+          {businessInfo.email}
+        </a>
+        .
+      </p>
     </main>
   );
 }

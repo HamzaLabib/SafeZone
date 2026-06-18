@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { businessInfo } from '../data/business';
 import { getProductById } from '../data/products';
 
 const REQUEST_NOTICE =
@@ -104,6 +105,16 @@ export function ProductDetailsPage() {
           <Button to="/contact" variant="outline" className="mt-3 w-full">
             Ask a Question
           </Button>
+          <p className="mt-3 text-xs leading-5 text-slate-500">
+            Product questions? Email{' '}
+            <a
+              className="font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
+              href={`mailto:${businessInfo.email}`}
+            >
+              {businessInfo.email}
+            </a>
+            .
+          </p>
         </Card>
       </section>
     </main>
