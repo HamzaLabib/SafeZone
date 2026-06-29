@@ -57,8 +57,12 @@ function parseStrictInteger(value) {
 }
 
 export function validateRegistration(body) {
+  const nameFields = normalizeNameFields(body);
   const data = {
-    fullName: cleanString(body.fullName, 120),
+    firstName: nameFields.firstName,
+    lastName: nameFields.lastName,
+    name: nameFields.name,
+    fullName: nameFields.fullName,
     email: cleanString(body.email, 180).toLowerCase(),
     phone: cleanString(body.phone, 60),
     selectedCourseId: cleanString(body.selectedCourseId || body.courseId, 120),
@@ -70,7 +74,7 @@ export function validateRegistration(body) {
   };
   const errors = {};
 
-  if (!data.fullName) errors.fullName = 'Full name is required.';
+  validateNameFields(nameFields, errors, 'fullName');
   if (!data.email) errors.email = 'Email is required.';
   if (data.email && !isValidEmail(data.email)) errors.email = 'Enter a valid email address.';
   if (!data.phone) errors.phone = 'Phone number is required.';
@@ -82,8 +86,12 @@ export function validateRegistration(body) {
 }
 
 export function validateContact(body) {
+  const nameFields = normalizeNameFields(body);
   const data = {
-    name: cleanString(body.name, 120),
+    firstName: nameFields.firstName,
+    lastName: nameFields.lastName,
+    name: nameFields.name,
+    fullName: nameFields.fullName,
     email: cleanString(body.email, 180).toLowerCase(),
     phone: cleanString(body.phone, 60),
     subject: cleanString(body.subject, 160),
@@ -92,7 +100,7 @@ export function validateContact(body) {
   };
   const errors = {};
 
-  if (!data.name) errors.name = 'Name is required.';
+  validateNameFields(nameFields, errors, 'name');
   if (!data.email) errors.email = 'Email is required.';
   if (data.email && !isValidEmail(data.email)) errors.email = 'Enter a valid email address.';
   if (!data.subject) errors.subject = 'Subject is required.';
@@ -106,7 +114,10 @@ export function validateOrderRequest(body) {
   const quantity = parseStrictInteger(body.quantity);
   const nameFields = normalizeNameFields(body);
   const data = {
-    fullName: cleanString(body.fullName, 120),
+    firstName: nameFields.firstName,
+    lastName: nameFields.lastName,
+    name: nameFields.name,
+    fullName: nameFields.fullName,
     email: cleanString(body.email, 180).toLowerCase(),
     phone: cleanString(body.phone, 60),
     productId: cleanString(body.productId, 120),
@@ -118,7 +129,7 @@ export function validateOrderRequest(body) {
   };
   const errors = {};
 
-  if (!data.fullName) errors.fullName = 'Full name is required.';
+  validateNameFields(nameFields, errors, 'fullName');
   if (!data.email) errors.email = 'Email is required.';
   if (data.email && !isValidEmail(data.email)) errors.email = 'Enter a valid email address.';
   if (!data.phone) errors.phone = 'Phone number is required.';

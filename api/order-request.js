@@ -77,7 +77,9 @@ export default async function handler(request, response) {
 
   const createdAt = new Date();
   const document = {
-    name: data.fullName,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    name: data.name,
     fullName: data.fullName,
     email: data.email,
     phone: data.phone,
@@ -112,6 +114,8 @@ export default async function handler(request, response) {
     const fulfillmentLabel = fulfillmentLabels[data.fulfillmentPreference] || data.fulfillmentPreference;
 
     const fieldsHtml = formatFields({
+      'First name': data.firstName,
+      'Last name': data.lastName,
       'Full name': data.fullName,
       Email: data.email,
       Phone: data.phone,
@@ -134,6 +138,8 @@ export default async function handler(request, response) {
         html: `<h2>New shop item request</h2><table>${fieldsHtml}</table>`,
         text: [
           'New shop item request',
+          `First name: ${data.firstName || '-'}`,
+          `Last name: ${data.lastName || '-'}`,
           `Full name: ${data.fullName}`,
           `Email: ${data.email}`,
           `Phone: ${data.phone}`,

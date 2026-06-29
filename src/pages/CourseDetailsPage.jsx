@@ -4,10 +4,10 @@ import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { getCourseById } from '../data/courses';
-import { businessInfo } from '../data/business';
+import { businessInfo, clearCriminalRecordNote } from '../data/business';
 import { useLogoFallback } from '../utils/imageFallback';
 
-function DetailList({ title, items }) {
+function DetailList({ title, items, note }) {
   return (
     <Card as="section" className="p-6">
       <h2 className="text-xl font-bold text-slate-950">{title}</h2>
@@ -19,6 +19,11 @@ function DetailList({ title, items }) {
           </li>
         ))}
       </ul>
+      {note && (
+        <div role="note" className="mt-5 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold leading-6 text-amber-950">
+          {note}
+        </div>
+      )}
     </Card>
   );
 }
@@ -83,7 +88,11 @@ export function CourseDetailsPage() {
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <DetailList title="What students will learn" items={course.learn} />
             <DetailList title="Who this course is for" items={course.audience} />
-            <DetailList title="Requirements" items={course.requirements} />
+            <DetailList
+              title="Requirements"
+              items={course.requirements}
+              note={course.requiresClearCriminalRecord ? clearCriminalRecordNote : undefined}
+            />
             <Card as="section" className="p-6">
               <h2 className="text-xl font-bold text-slate-950">Course support</h2>
               <p className="mt-4 text-sm leading-6 text-slate-700">

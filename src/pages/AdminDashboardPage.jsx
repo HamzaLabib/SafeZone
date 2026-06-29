@@ -51,11 +51,18 @@ function formatFulfillmentPreference(value) {
   return labels[value] || value || '-';
 }
 
+function formatDisplayName(record) {
+  const splitName = [record.firstName, record.lastName].filter(Boolean).join(' ').trim();
+  return record.name || record.fullName || splitName || '-';
+}
+
 function includesQuery(record, query) {
   if (!query) return true;
   const haystack = [
     record.fullName,
     record.name,
+    record.firstName,
+    record.lastName,
     record.email,
     record.phone,
     record.courseInterest,
@@ -334,7 +341,7 @@ export function AdminDashboardPage() {
               <tbody className="divide-y divide-slate-100">
                 {filteredLeads.map((lead) => (
                   <tr key={lead._id} className="align-top">
-                    <td className="px-4 py-3 font-semibold text-slate-950">{lead.fullName || '-'}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-950">{formatDisplayName(lead)}</td>
                     <td className="px-4 py-3 text-slate-600">{lead.email || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{lead.phone || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{lead.selectedCourseTitle || lead.courseInterest || '-'}</td>
@@ -403,7 +410,7 @@ export function AdminDashboardPage() {
               <tbody className="divide-y divide-slate-100">
                 {filteredOrderRequests.map((orderRequest) => (
                   <tr key={orderRequest._id} className="align-top">
-                    <td className="px-4 py-3 font-semibold text-slate-950">{orderRequest.fullName || '-'}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-950">{formatDisplayName(orderRequest)}</td>
                     <td className="px-4 py-3 text-slate-600">{orderRequest.email || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{orderRequest.phone || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{orderRequest.productTitle || '-'}</td>
@@ -472,7 +479,7 @@ export function AdminDashboardPage() {
               <tbody className="divide-y divide-slate-100">
                 {filteredMessages.map((message) => (
                   <tr key={message._id} className="align-top">
-                    <td className="px-4 py-3 font-semibold text-slate-950">{message.name || '-'}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-950">{formatDisplayName(message)}</td>
                     <td className="px-4 py-3 text-slate-600">{message.email || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{message.phone || '-'}</td>
                     <td className="px-4 py-3 text-slate-600">{message.subject || '-'}</td>

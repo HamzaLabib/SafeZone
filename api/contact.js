@@ -64,7 +64,9 @@ export default async function handler(request, response) {
     const result = await db.collection('contactMessages').insertOne(document);
 
     const fieldsHtml = formatFields({
-      Name: data.name,
+      'First name': data.firstName,
+      'Last name': data.lastName,
+      'Full name': data.fullName,
       Email: data.email,
       Phone: data.phone,
       Subject: data.subject,
@@ -80,7 +82,9 @@ export default async function handler(request, response) {
         html: `<h2>New website contact message</h2><table>${fieldsHtml}</table>`,
         text: [
           'New website contact message',
-          `Name: ${data.name}`,
+          `First name: ${data.firstName || '-'}`,
+          `Last name: ${data.lastName || '-'}`,
+          `Full name: ${data.fullName}`,
           `Email: ${data.email}`,
           `Phone: ${data.phone || '-'}`,
           `Subject: ${data.subject}`,

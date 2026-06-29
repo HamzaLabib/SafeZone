@@ -9,6 +9,9 @@ export const businessInfo = {
   baseUrl: 'https://safezonesecurityacademy.ca',
 };
 
+export const clearCriminalRecordNote =
+  'Important Note: Safe Zone Security Academy requires students to have a Clear Criminal Record (CCR) before registering for security training and before proceeding with the security licensing process.';
+
 export const trustIndicators = [
   {
     title: 'Quebec-Focused Training',
