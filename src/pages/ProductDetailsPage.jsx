@@ -14,7 +14,7 @@ export function ProductDetailsPage() {
   const product = getProductById(productId);
 
   if (!product || !product.active) {
-    return <Navigate to="/shop" replace />;
+    return <Navigate to="/store" replace />;
   }
 
   const imageSrc = product.images?.[0] || '/logo-shield.svg';
@@ -23,11 +23,11 @@ export function ProductDetailsPage() {
     <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
       <Seo title={product.title} description={product.description} />
       <Link
-        to="/shop"
+        to="/store"
         className="mb-6 inline-flex items-center gap-2 rounded text-sm font-semibold text-academyBlue hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-academyBlue"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        Back to shop
+        Back to store
       </Link>
 
       <section className="grid gap-8 lg:grid-cols-[1fr_360px]">

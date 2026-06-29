@@ -25,8 +25,8 @@ export function ThankYouPage() {
               <Button to="/courses" variant="outlineDark" size="lg">
                 Courses
               </Button>
-              <Button to="/shop" variant="outlineDark" size="lg">
-                Shop
+              <Button to="/store" variant="outlineDark" size="lg">
+                Store
               </Button>
             </div>
           </section>
