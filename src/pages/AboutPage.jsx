@@ -113,9 +113,9 @@ export function AboutPage() {
 
         <section lang="fr" className="mt-12 rounded-lg border border-blue-200 bg-blue-50 p-6 md:p-8">
           <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Renseignements en français</p>
-          <h2 className="mt-2 text-3xl font-extrabold text-slate-950">Formation en sécurité à Montréal</h2>
+          <h2 className="mt-2 text-3xl font-extrabold text-slate-950">Formation agent de sécurité à Montréal</h2>
           <p className="mt-4 max-w-4xl leading-7 text-slate-700">
-            Vous cherchez une formation d’agent de sécurité au Québec ou un cours d’agent de sécurité? Safe Zone est une école de sécurité à Montréal axée sur la préparation professionnelle, les responsabilités du métier et l’accompagnement à l’admission. Notre approche de formation professionnelle en sécurité aide les étudiants à explorer les prochaines étapes d’une carrière au Québec. Communiquez avec l’équipe d’admission pour confirmer les services et les cours actuellement offerts en français.
+            Safe Zone Security Academy accompagne les étudiants qui souhaitent suivre une formation d’agent de sécurité au Québec. Notre école de sécurité à Montréal offre une formation en sécurité à Montréal axée sur les responsabilités professionnelles, la préparation au travail et le soutien à l’admission pour les étudiants qui veulent commencer une carrière en sécurité. Nos cours d’agent de sécurité et notre formation professionnelle en sécurité aident les étudiants à avancer vers les étapes du parcours de certification BSP au Québec, sous réserve de leur admissibilité et des exigences réglementaires applicables.
           </p>
         </section>
 

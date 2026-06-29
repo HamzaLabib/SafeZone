@@ -9,6 +9,11 @@ export const faqs = [
       'Students who successfully complete all required course requirements may receive the applicable course certificate. Security Guard Training students may then continue the Quebec security licensing pathway, subject to student eligibility and applicable regulatory requirements. First Aid & CPR students may receive a certificate upon successful completion of all course requirements.',
   },
   {
+    question: 'How do I become a security guard in Quebec?',
+    answer:
+      'Safe Zone Security Academy is a security training school in Montreal offering professional security guard training in Quebec for students preparing to start a career in security. Our security guard course in Montreal helps students complete the required training steps for the Quebec security guard licence and BSP certification Quebec pathway, subject to student eligibility and applicable regulatory requirements. Security admissions support is available to guide students through the next steps.',
+  },
+  {
     question: 'Do you offer online or hybrid training?',
     answer: 'Some programs may include online or hybrid components depending on the course and schedule. Practical sessions may require in-person attendance.',
   },
