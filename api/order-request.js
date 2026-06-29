@@ -134,10 +134,10 @@ export default async function handler(request, response) {
 
     try {
       await sendAdminNotification({
-        subject: `New shop request: ${product.title}`,
-        html: `<h2>New shop item request</h2><table>${fieldsHtml}</table>`,
+        subject: `New store request: ${product.title}`,
+        html: `<h2>New store item request</h2><table>${fieldsHtml}</table>`,
         text: [
-          'New shop item request',
+          'New store item request',
           `First name: ${data.firstName || '-'}`,
           `Last name: ${data.lastName || '-'}`,
           `Full name: ${data.fullName}`,

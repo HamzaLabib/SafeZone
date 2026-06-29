@@ -1,7 +1,7 @@
 export const faqs = [
   {
     question: 'How long does it take to complete the Security Guard course?',
-    answer: 'The core Security Guard Training course is designed as a 40-hour program. Scheduling details depend on the current cohort.',
+    answer: 'The core Security Guard Training course is designed as a 70-hour program. Scheduling details depend on the current cohort.',
   },
   {
     question: 'What certificates or licensing steps follow course completion?',

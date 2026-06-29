@@ -79,6 +79,7 @@ export function AdminLoginPage() {
       <Seo
         title="Admin Login"
         description="Protected Safe Zone Security Academy administrator login."
+        noindex={true}
       />
       <main className="mx-auto max-w-xl px-4 py-12 md:px-8">
         <Card className="overflow-hidden">
