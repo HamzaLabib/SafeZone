@@ -1,7 +1,6 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { businessInfo } from '../data/business';
 import { Button } from './ui/Button';
 
 const navLinks = [
@@ -24,19 +23,15 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="mx-auto max-w-7xl px-4 py-4 md:px-8">
-      <div className="flex items-center justify-between gap-4">
+    <header className="mx-auto max-w-7xl px-4 py-3 md:px-8">
+      <div className="flex items-center justify-between gap-4 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <Link
           to="/"
-          className="flex cursor-pointer items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-academyNavy"
+          className="inline-flex cursor-pointer rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-academyNavy lg:justify-self-start"
+          aria-label="Safe Zone Security Academy home"
           onClick={() => setIsOpen(false)}
         >
-          <img src="/logo.svg" className="h-12 w-12 rounded-full object-cover" alt="Safe Zone Security Academy logo" />
-          <p className="text-sm font-semibold leading-tight text-white md:text-base">
-            SAFE ZONE
-            <br />
-            {businessInfo.name.replace('Safe Zone ', '').toUpperCase()}
-          </p>
+          <img src="/logo.svg" className="h-10 w-10 rounded-full object-cover md:h-11 md:w-11" alt="" aria-hidden="true" />
         </Link>
         <nav className="hidden items-center gap-1 text-sm lg:flex">
           {navLinks.map((link) => (
@@ -45,7 +40,7 @@ export function Navbar() {
             </NavLink>
           ))}
         </nav>
-        <Button to="/register" className="hidden lg:inline-flex">
+        <Button to="/register" className="hidden lg:inline-flex lg:justify-self-end">
           Register Interest
         </Button>
         <button

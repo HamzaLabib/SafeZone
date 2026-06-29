@@ -9,9 +9,9 @@ export function CourseAndPortal() {
   return (
     <section>
       <SectionHeader
-        eyebrow="Featured courses"
-        title="Start with the right training path"
-        description="Explore practical programs designed for security readiness, emergency response, and professional development."
+        eyebrow="Security courses in Montreal"
+        title="Professional security training for your next step"
+        description="Explore a security guard course in Montreal and related programs for Quebec licensing preparation, emergency response, and career development. Admissions can help you choose a suitable path."
         action={
           <Button to="/courses" variant="ghost" size="sm">
             View All Courses

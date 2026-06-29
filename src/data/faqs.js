@@ -4,9 +4,9 @@ export const faqs = [
     answer: 'The core Security Guard Training course is designed as a 40-hour program. Scheduling details depend on the current cohort.',
   },
   {
-    question: 'Are your certifications recognized in Quebec?',
+    question: 'What certificates or licensing steps follow course completion?',
     answer:
-      'Safe Zone Security Academy structures training around professional security expectations in Quebec and Canada. Contact us for current certification pathway details.',
+      'Students who successfully complete all required course requirements may receive the applicable course certificate. Security Guard Training students may then continue the Quebec security licensing pathway, subject to student eligibility and applicable regulatory requirements. First Aid & CPR students may receive a certificate upon successful completion of all course requirements.',
   },
   {
     question: 'Do you offer online or hybrid training?',
