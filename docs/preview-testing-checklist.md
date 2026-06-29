@@ -36,17 +36,18 @@ Use this checklist for each Vercel preview before public sharing. Test with prev
 ## Routing And UX
 
 - [ ] Invalid course route redirects safely to `/courses`.
-- [ ] Invalid product route redirects safely to `/shop`.
+- [ ] Invalid product route redirects safely to `/store`.
 - [ ] Mobile navigation opens, closes, and links to all public sections.
 - [ ] 404 page renders for unknown frontend routes.
 - [ ] `/checkout/:courseId` clearly shows payment is disabled.
-- [ ] `/shop` and product pages clearly say an item request is not a purchase.
+- [ ] `/store` and product pages clearly say an item request is not a purchase.
 
 ## SEO And Private Pages
 
 - [ ] `/thank-you` is not in the sitemap and has noindex metadata.
 - [ ] `/admin/*` is blocked by `robots.txt`.
-- [ ] `/shop`, product pages, and `/order-request` are in the sitemap.
+- [ ] `/store`, product pages, and `/order-request` are in the sitemap.
+- [ ] Legacy `/shop` and `/shop/:productId` links redirect to the corresponding `/store` routes.
 - [ ] Canonical tags render on public pages.
 - [ ] Open Graph image metadata renders on public pages.
 
@@ -58,4 +59,3 @@ Use this checklist for each Vercel preview before public sharing. Test with prev
 - [ ] Internal questionnaire/review files remain removed from the public repo.
 - [ ] Public launch is still blocked until owner/legal/French/content items are complete.
 - [ ] Payments remain disabled.
-

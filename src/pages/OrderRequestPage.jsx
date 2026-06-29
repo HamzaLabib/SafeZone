@@ -158,12 +158,12 @@ export function OrderRequestPage() {
     <>
       <Seo
         title="Request an Item"
-        description="Submit a Safe Zone Security Academy shop request for books, materials, equipment, accessories, or bundles."
+        description="Submit a Safe Zone Security Academy store request for books, materials, equipment, accessories, or bundles."
       />
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:px-8 lg:grid-cols-[0.9fr_1.1fr]">
         <section>
           <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Request to order</p>
-          <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Request shop items from the academy.</h1>
+          <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Request store items from the academy.</h1>
           <p className="mt-4 leading-7 text-slate-600">
             Send your item request and the academy will confirm price, taxes, availability, and pickup or shipping details before
             any purchase is finalized.

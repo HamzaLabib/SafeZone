@@ -8,10 +8,10 @@ Status: payment-ready foundation only. Live Stripe payments are not active.
 - All current courses keep `amountCents: null`, `displayPrice: "Contact us for pricing"`, blank `stripePriceId`, and `paymentEnabled: false`.
 - `/checkout/:courseId` exists as a disabled payment-readiness route.
 - If a course has no confirmed price, no confirmed schedule, no Stripe price id, or `paymentEnabled` is false, the route blocks payment and sends the visitor back to registration interest.
-- `/shop` and `/order-request` are request-to-order only. Product records include future payment fields, but all Phase 1 shop items keep `paymentEnabled: false` and do not expose cart or checkout actions.
+- `/store` and `/order-request` are request-to-order only. Product records include future payment fields, but all Phase 1 store items keep `paymentEnabled: false` and do not expose cart or checkout actions.
 - Stripe Checkout Sessions should be the future payment method. No card data should ever touch this server.
 
-## Shop Request Fields
+## Store Request Fields
 
 `orderRequests` stores request-to-order metadata without creating a purchase:
 
@@ -29,7 +29,7 @@ Status: payment-ready foundation only. Live Stripe payments are not active.
 - `createdAt`
 - `notificationStatus`
 
-Final price, taxes, availability, and pickup or shipping must be confirmed manually before treating a shop request as a purchase.
+Final price, taxes, availability, and pickup or shipping must be confirmed manually before treating a store request as a purchase.
 
 ## Registration Lead Fields
 

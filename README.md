@@ -2,7 +2,7 @@
 
 React + Tailwind + React Router frontend prepared for Vercel deployment.
 
-This is currently a brochure, lead-generation, and request-to-order website with MongoDB-backed registration/contact/shop submissions, Resend admin notifications, and a simple password-protected admin dashboard. There is no student portal backend, live payment processing, cart, or student authentication connected yet.
+This is currently a brochure, lead-generation, and request-to-order website with MongoDB-backed registration, contact, and store submissions, Resend admin notifications, and a simple password-protected admin dashboard. There is no student portal backend, live payment processing, cart, or student authentication connected yet.
 
 Payment readiness notes are documented in [docs/payment-readiness.md](docs/payment-readiness.md). The site is prepared for a future Stripe Checkout Sessions integration, but live payments remain disabled.
 
@@ -73,8 +73,9 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - `/courses`
 - `/courses/:courseId`
 - `/checkout/:courseId`
-- `/shop`
-- `/shop/:productId`
+- `/store`
+- `/store/:productId`
+- `/shop` and `/shop/:productId` redirect to the corresponding store routes
 - `/order-request`
 - `/register`
 - `/contact`
@@ -95,7 +96,7 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - Replace the temporary admin password approach with proper role-based authentication before handing access to staff.
 - Add real authentication before enabling student dashboard features.
 - Add real schedules, pricing, and Stripe Checkout integration only when confirmed by the business.
-- Keep shop requests as request-to-order only until product prices, taxes, availability, pickup/shipping, and refund policy are confirmed.
+- Keep store requests as request-to-order only until product prices, taxes, availability, pickup/shipping, and refund policy are confirmed.
 - Use Stripe test mode and webhook signature verification before considering live mode.
 - Collect remaining owner launch content in [docs/owner-launch-content-checklist.md](docs/owner-launch-content-checklist.md).
 - Treat the current admin dashboard as preview-only; see [docs/admin-operations-readiness.md](docs/admin-operations-readiness.md).

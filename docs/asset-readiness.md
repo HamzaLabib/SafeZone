@@ -8,7 +8,7 @@ Phase 2 cleanup renamed public training images with spaces or trailing spaces to
 - `Securities indoor.png` -> `securities-indoor.png`
 - `Security outdoor.png` -> `security-outdoor.png`
 
-No real product photos are available in the current repo, so shop products still use the Safe Zone shield placeholder. Replace those placeholders with real product photos before public launch or before presenting the shop as a finalized catalog.
+No real product photos are available in the current repo, so store products still use the Safe Zone shield placeholder. Replace those placeholders with real product photos before public launch or before presenting the store as a finalized catalog.
 
 Large image files should still be compressed with a trusted image workflow before public launch. Recommended targets:
 
@@ -16,4 +16,3 @@ Large image files should still be compressed with a trusted image workflow befor
 - Keep hero/course images visually clear at their displayed sizes.
 - Preserve alt text and update references whenever filenames change.
 - Confirm image licensing/source rights for every public image.
-

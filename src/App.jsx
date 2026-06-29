@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { Footer } from './components/Footer';
 import { Navbar } from './components/Navbar';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -14,9 +14,14 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { OrderRequestPage } from './pages/OrderRequestPage';
 import { ProductDetailsPage } from './pages/ProductDetailsPage';
 import { RegisterPage } from './pages/RegisterPage';
-import { ShopPage } from './pages/ShopPage';
+import { StorePage } from './pages/StorePage';
 import { StaticInfoPage } from './pages/StaticInfoPage';
 import { ThankYouPage } from './pages/ThankYouPage';
+
+function LegacyProductRedirect() {
+  const { productId } = useParams();
+  return <Navigate to={`/store/${productId}`} replace />;
+}
 
 export default function App() {
   return (
@@ -29,8 +34,10 @@ export default function App() {
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CourseDetailsPage />} />
         <Route path="/checkout/:courseId" element={<CheckoutPage />} />
-        <Route path="/shop" element={<ShopPage />} />
-        <Route path="/shop/:productId" element={<ProductDetailsPage />} />
+        <Route path="/store" element={<StorePage />} />
+        <Route path="/store/:productId" element={<ProductDetailsPage />} />
+        <Route path="/shop" element={<Navigate to="/store" replace />} />
+        <Route path="/shop/:productId" element={<LegacyProductRedirect />} />
         <Route path="/order-request" element={<OrderRequestPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/about" element={<AboutPage />} />

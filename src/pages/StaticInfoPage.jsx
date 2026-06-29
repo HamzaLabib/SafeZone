@@ -17,7 +17,7 @@ const content = {
       },
       {
         title: 'Why We Collect It',
-        text: 'Safe Zone Security Academy uses submitted information to respond to inquiries, follow up on registration interest, confirm shop item requests, review availability, and support admissions or administrative communication.',
+        text: 'Safe Zone Security Academy uses submitted information to respond to inquiries, follow up on registration interest, confirm store item requests, review availability, and support admissions or administrative communication.',
       },
       {
         title: 'Storage And Access',
@@ -25,7 +25,7 @@ const content = {
       },
       {
         title: 'Payments',
-        text: 'This website does not currently process online payments. Course enrollment, shop pricing, taxes, pickup or shipping, and any payment instructions must be confirmed directly by staff.',
+        text: 'This website does not currently process online payments. Course enrollment, store pricing, taxes, pickup or shipping, and any payment instructions must be confirmed directly by staff.',
       },
       {
         title: 'Review Status',
@@ -47,14 +47,14 @@ const content = {
     sections: [
       {
         title: 'Website Information',
-        text: 'Course, shop, schedule, format, availability, and pricing information on this website is provided for general communication and may change before enrollment or purchase is confirmed.',
+        text: 'Course, store, schedule, format, availability, and pricing information on this website is provided for general communication and may change before enrollment or purchase is confirmed.',
       },
       {
         title: 'Registration Interest',
         text: 'Submitting a course registration interest form does not complete enrollment, reserve a seat, or create a payment obligation. Admissions must confirm schedule, format, pricing, requirements, and next steps directly.',
       },
       {
-        title: 'Shop Requests',
+        title: 'Store Requests',
         text: 'Submitting an item request is not a purchase. Staff must confirm final product details, price, taxes, availability, quantity, pickup or shipping, and payment instructions before any sale is finalized.',
       },
       {

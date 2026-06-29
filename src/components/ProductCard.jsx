@@ -8,7 +8,7 @@ export function ProductCard({ product }) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
       <Link
-        to={`/shop/${product.productId}`}
+        to={`/store/${product.productId}`}
         className="group block bg-slate-50 focus:outline-none focus:ring-2 focus:ring-academyBlue focus:ring-offset-2"
       >
         <img
@@ -21,7 +21,7 @@ export function ProductCard({ product }) {
       <div className="flex flex-1 flex-col p-5">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-academyBlue">{product.category}</p>
         <h3 className="text-lg font-bold text-slate-950">
-          <Link to={`/shop/${product.productId}`} className="hover:text-academyBlue">
+          <Link to={`/store/${product.productId}`} className="hover:text-academyBlue">
             {product.title}
           </Link>
         </h3>
@@ -47,7 +47,7 @@ export function ProductCard({ product }) {
             <PackageSearch className="h-4 w-4" aria-hidden="true" />
             Request Item
           </Button>
-          <Button to={`/shop/${product.productId}`} variant="outline">
+          <Button to={`/store/${product.productId}`} variant="outline">
             View Details
           </Button>
         </div>
