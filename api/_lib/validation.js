@@ -17,6 +17,45 @@ export function hasSpamTrap(body) {
   return Boolean(cleanString(body.website || body.company || body.url, 200));
 }
 
+function normalizeNameFields(body) {
+  const firstName = cleanString(body.firstName, 60);
+  const lastName = cleanString(body.lastName, 60);
+  const legacyName = cleanString(body.name || body.fullName, 120);
+  const combinedName = [firstName, lastName].filter(Boolean).join(' ');
+
+  return {
+    firstName,
+    lastName,
+    name: combinedName || legacyName,
+    fullName: combinedName || legacyName,
+    usesSplitFields:
+      Object.prototype.hasOwnProperty.call(body, 'firstName') || Object.prototype.hasOwnProperty.call(body, 'lastName'),
+  };
+}
+
+function validateNameFields(nameFields, errors, legacyErrorKey) {
+  if (nameFields.usesSplitFields) {
+    if (!nameFields.firstName) errors.firstName = 'First name is required.';
+    if (!nameFields.lastName) errors.lastName = 'Last name is required.';
+    return;
+  }
+
+  if (!nameFields.name) errors[legacyErrorKey] = 'Name is required.';
+}
+
+function parseStrictInteger(value) {
+  if (typeof value === 'number') {
+    return Number.isSafeInteger(value) ? value : null;
+  }
+
+  if (typeof value !== 'string' || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return Number.isSafeInteger(parsedValue) ? parsedValue : null;
+}
+
 export function validateRegistration(body) {
   const data = {
     fullName: cleanString(body.fullName, 120),
@@ -64,14 +103,15 @@ export function validateContact(body) {
 }
 
 export function validateOrderRequest(body) {
-  const quantity = Number.parseInt(body.quantity, 10);
+  const quantity = parseStrictInteger(body.quantity);
+  const nameFields = normalizeNameFields(body);
   const data = {
     fullName: cleanString(body.fullName, 120),
     email: cleanString(body.email, 180).toLowerCase(),
     phone: cleanString(body.phone, 60),
     productId: cleanString(body.productId, 120),
     productTitle: cleanString(body.productTitle, 180),
-    quantity: Number.isInteger(quantity) ? quantity : 0,
+    quantity: quantity ?? 0,
     fulfillmentPreference: cleanString(body.fulfillmentPreference, 40),
     message: cleanString(body.message, 2000),
     consent: body.consent === true,

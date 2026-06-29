@@ -22,9 +22,22 @@ const initialValues = {
   website: '',
 };
 
+function parseStrictInteger(value) {
+  if (typeof value === 'number') {
+    return Number.isSafeInteger(value) ? value : null;
+  }
+
+  if (typeof value !== 'string' || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return Number.isSafeInteger(parsedValue) ? parsedValue : null;
+}
+
 function validate(values) {
   const errors = {};
-  const quantity = Number.parseInt(values.quantity, 10);
+  const quantity = parseStrictInteger(values.quantity);
 
   if (!values.name.trim()) {
     errors.name = 'Enter your full name.';
@@ -125,7 +138,7 @@ export function OrderRequestPage() {
           phone: values.phone,
           productId: selectedProduct?.productId || values.product,
           productTitle: selectedProduct?.title || values.product,
-          quantity: Number.parseInt(values.quantity, 10),
+          quantity: parseStrictInteger(values.quantity),
           fulfillmentPreference: values.fulfillmentPreference,
           message: values.message,
           consent: values.consent,
