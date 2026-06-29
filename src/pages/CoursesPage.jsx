@@ -16,13 +16,13 @@ export function CoursesPage() {
   return (
     <>
       <Seo
-        title="Security Training Courses"
-        description="Explore Safe Zone Security Academy courses for security guard readiness, first aid and CPR, loss prevention, supervision, de-escalation, and emergency response."
+        title="Security Guard Course in Montreal"
+        description="Explore professional security training in Montreal, including Quebec-focused security guard preparation, first aid, loss prevention, de-escalation, and emergency response."
       />
       <PageHero
-        eyebrow="All programs"
-        title="Security Training Courses"
-        description="Choose practical training for security guard readiness, emergency response, supervision, and professional development. Admissions will confirm schedule, pricing, and format before enrollment."
+        eyebrow="Professional training in Quebec"
+        title="Security Guard Courses in Montreal"
+        description="Choose practical security training for Quebec licensing preparation, workplace readiness, emergency response, supervision, and professional development. Admissions will confirm schedule, pricing, format, and current requirements before enrollment."
         primaryAction={{ label: 'Register Interest', to: '/register' }}
         secondaryAction={{ label: 'Ask a Question', to: '/contact' }}
       />

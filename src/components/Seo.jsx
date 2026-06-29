@@ -46,6 +46,7 @@ export function Seo({ title, description, jsonLd, noindex = false, image = '/her
     if (description) {
       upsertMeta('meta[name="description"]', { name: 'description', content: description });
       upsertMeta('meta[property="og:description"]', { property: 'og:description', content: description });
+      upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
     }
 
     upsertLink('link[rel="canonical"]', { rel: 'canonical', href: getCanonicalUrl() });

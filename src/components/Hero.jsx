@@ -21,34 +21,35 @@ export function Hero() {
       />
       <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-12 md:px-8 md:py-20 lg:grid-cols-[1fr_0.55fr]">
         <div className="max-w-3xl text-white">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">{businessInfo.name}</p>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight md:text-6xl">
-            Security Training Built for <span className="text-blue-300">Your Career</span>
+          <div className="mb-7 inline-flex max-w-full items-center gap-4 sm:mb-8 sm:gap-5">
+            <img
+              src="/logo.svg"
+              className="h-14 w-14 shrink-0 rounded-full object-cover drop-shadow-[0_3px_12px_rgba(0,0,0,0.5)] sm:h-16 sm:w-16 md:h-20 md:w-20"
+              alt="Safe Zone Security Academy logo"
+            />
+            <p className="text-lg font-extrabold leading-tight tracking-[0.04em] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-xl md:text-2xl">
+              <span className="block">SAFE ZONE</span>
+              <span className="mt-0.5 block">SECURITY ACADEMY</span>
+            </p>
+          </div>
+          <h1 className="text-4xl font-extrabold leading-tight md:text-6xl">
+            Security Guard Training in <span className="text-blue-300">Montreal, Quebec</span>
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/85">
-            Professional security training for students preparing to build practical skills, understand workplace expectations, and take the next step toward security-sector opportunities.
+            Safe Zone Security Academy helps students prepare for careers in security through professional training, practical guidance, and admissions support.
           </p>
-          {/* Professional security training built on discipline, integrity, and excellence. Empowering the next generation of security professionals across Quebec and Canada. */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button to="/register" size="lg">
-              Register Interest
+            <Button to="/courses" size="lg">
+              Explore Courses
             </Button>
-            <Button to="/courses" variant="outlineDark" size="lg">
-              View Courses
+            <Button to="/contact" variant="outlineDark" size="lg">
+              Contact Admissions
             </Button>
           </div>
           <p className="mt-6 flex items-center gap-2 text-sm text-white/90">
-            <MapPin className="h-4 w-4" aria-hidden="true" /> Proudly training security professionals in {businessInfo.serviceArea}
+            <MapPin className="h-4 w-4" aria-hidden="true" /> Quebec-focused security training in {businessInfo.location}
           </p>
         </div>
-        {/* <div className="hidden self-end rounded-lg border border-white/10 bg-white/10 p-5 text-white shadow-2xl backdrop-blur lg:block">
-          <img src="/logo.svg" className="h-16 w-16 rounded-full bg-white" alt="Safe Zone Security Academy logo" />
-          <p className="mt-5 text-sm uppercase tracking-wide text-blue-200">{businessInfo.tagline}</p>
-          <p className="mt-2 text-2xl font-extrabold">Admissions-focused training guidance</p>
-          <p className="mt-3 text-sm leading-6 text-white/75">
-            Start with a course request. Admissions confirms schedule, format, pricing, and next steps before enrollment.
-          </p>
-        </div> */}
       </div>
     </section>
   );

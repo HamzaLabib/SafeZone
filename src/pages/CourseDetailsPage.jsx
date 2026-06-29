@@ -89,6 +89,13 @@ export function CourseDetailsPage() {
               <p className="mt-4 text-sm leading-6 text-slate-700">
                 Students receive guidance on attendance, expectations, course preparation, and next steps for security-sector readiness. Admissions will confirm current schedule, pricing, and format before enrollment.
               </p>
+              <p className="mt-3 text-sm leading-6 text-slate-700">
+                {course.completionStatement ||
+                  'Students who successfully complete all required course components may receive the applicable course completion documentation, where offered and subject to course-specific requirements.'}
+              </p>
+              <p className="mt-3 text-xs leading-5 text-slate-500">
+                Course completion does not guarantee employment or automatic job placement.
+              </p>
             </Card>
           </div>
         </div>

@@ -1,20 +1,20 @@
-import { BriefcaseBusiness, FileCheck2, ShieldCheck, Users } from 'lucide-react';
+import { BookOpenCheck, Languages, MapPin, MessagesSquare, ShieldCheck } from 'lucide-react';
 import { trustIndicators } from '../data/business';
 import { Card } from './ui/Card';
 import { SectionHeader } from './ui/SectionHeader';
 
-const icons = [ShieldCheck, BriefcaseBusiness, Users, FileCheck2];
+const icons = [ShieldCheck, Languages, MessagesSquare, BookOpenCheck, MapPin];
 
 export function WhyChooseUs() {
   return (
-    <section className="mb-10">
+    <section className="mt-12">
       <SectionHeader
         align="center"
-        eyebrow="Why Safe Zone"
-        title="Training support built around career readiness"
-        description="The launch site focuses on course discovery and admissions guidance while the student portal is prepared for a future backend."
+        eyebrow="Why choose Safe Zone"
+        title="Professional security training with local support"
+        description="A clear, student-focused approach to security career preparation in Montreal and across Quebec."
       />
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         {trustIndicators.map(({ title, text }, index) => {
           const Icon = icons[index] || ShieldCheck;
           return (

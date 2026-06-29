@@ -4,21 +4,21 @@ import { SectionHeader } from './ui/SectionHeader';
 const trainingVisuals = [
   {
     title: 'Security Guard Training',
-    text: 'Structured preparation for professional site awareness, observation, and conduct.',
+    text: 'Structured security guard training in Quebec focused on professional site awareness, observation, and conduct.',
     image: '/training-images/security-indoor.png',
-    alt: 'Safe Zone security officer standing inside a professional facility corridor',
+    alt: 'Security officer in a Montreal facility during professional security training',
   },
   {
     title: 'Professional Readiness',
     text: 'Course support built around confidence, communication, and workplace expectations.',
     image: '/training-images/securities-on-camera.png',
-    alt: 'Safe Zone security team reviewing surveillance cameras during professional training',
+    alt: 'Security training students reviewing surveillance cameras in Montreal',
   },
   {
     title: 'Workplace Safety & Awareness',
     text: 'Scenario-focused learning for safer teams, facilities, and public-facing environments.',
     image: '/training-images/securities-indoor.png',
-    alt: 'Safe Zone security officers monitoring an indoor transit environment',
+    alt: 'Quebec security officers practicing situational awareness in an indoor environment',
   },
   // {
   //   title: 'Mobile Patrol Presence',
@@ -36,7 +36,7 @@ const trainingVisuals = [
 
 export function ProfessionalTrainingVisuals() {
   return (
-    <section className="mb-12">
+    <section className="mb-12 pt-8">
       <SectionHeader
         align="center"
         eyebrow="Professional Security Training"

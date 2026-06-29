@@ -11,20 +11,24 @@ export const businessInfo = {
 
 export const trustIndicators = [
   {
-    title: 'Practical Training',
-    text: 'Programs focus on real workplace scenarios, clear procedures, and professional decision-making.',
+    title: 'Quebec-Focused Training',
+    text: 'Training is designed for students pursuing security careers in Quebec, with practical attention to workplace readiness and professional responsibilities.',
   },
   {
-    title: 'Career-Focused Courses',
-    text: 'Course pathways are built for students preparing to enter or advance in the security field.',
+    title: 'English & French Guidance',
+    text: 'Montreal students can contact admissions to confirm the English or French guidance currently available for registration and course planning.',
   },
   {
-    title: 'Student Support',
-    text: 'Admissions guidance helps students understand next steps, preparation, and course expectations.',
+    title: 'Personalized Admissions Guidance',
+    text: 'From the first question to registration, our security admissions support makes course options and next steps easier to understand.',
   },
   {
-    title: 'Certificate Preparation',
-    text: 'Training is organized around skills, attendance, and documentation students may need after completion.',
+    title: 'Practical Learning Approach',
+    text: 'Students move beyond theory with a focus on real security responsibilities, professionalism, communication, and situational awareness.',
+  },
+  {
+    title: 'Local Montreal Focus',
+    text: 'We are a Montreal-based academy committed to preparing responsible professionals who can contribute to safer communities across Quebec.',
   },
 ];
 

@@ -12,25 +12,43 @@ import { businessInfo, enrollmentSteps } from '../data/business';
 export function HomePage() {
   const organizationJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'EducationalOrganization',
     name: businessInfo.name,
     url: businessInfo.baseUrl,
     email: businessInfo.email,
     areaServed: businessInfo.serviceArea,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Montreal',
+      addressRegion: 'QC',
+      addressCountry: 'CA',
+    },
   };
 
   return (
     <>
       <Seo
-        title="Security Training Built for Your Career"
-        description="Safe Zone Security Academy helps students explore professional security training courses and connect with admissions for next steps."
+        title="Security Guard Training in Montreal, Quebec"
+        description="Explore professional security guard training in Quebec with practical courses, Montreal-based admissions support, and guidance for a career in security."
         jsonLd={organizationJsonLd}
       />
       <Hero />
       <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+        <section className="mb-12 grid gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[1fr_auto] md:items-center md:p-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">About Safe Zone</p>
+            <h2 className="mt-2 text-3xl font-extrabold text-slate-950">A Montreal-based security training academy</h2>
+            <p className="mt-3 max-w-4xl leading-7 text-slate-600">
+              Safe Zone Security Academy helps students prepare for security careers in Quebec. We focus on practical learning, professional standards, and clear security admissions support from the first inquiry to registration.
+            </p>
+          </div>
+          <Button to="/about" variant="outline">
+            Learn More About Us
+          </Button>
+        </section>
+        <CourseAndPortal />
         <WhyChooseUs />
         <ProfessionalTrainingVisuals />
-        <CourseAndPortal />
         <section className="mt-12">
           <SectionHeader
             align="center"
@@ -55,9 +73,9 @@ export function HomePage() {
           <div className="grid gap-6 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">Ready to take the next step?</p>
-              <h2 className="mt-2 text-3xl font-extrabold">Connect with admissions before launch details are finalized.</h2>
+              <h2 className="mt-2 text-3xl font-extrabold">Ready to start your security training in Montreal?</h2>
               <p className="mt-3 max-w-3xl leading-7 text-white/75">
-                Submit your course interest or ask a question. Admissions can review new website submissions and follow up with next steps.
+                Contact our admissions team today to discuss professional security training, course availability, and the next steps toward a career in security in Quebec.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">

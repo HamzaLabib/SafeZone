@@ -27,9 +27,11 @@ export const courses = [
     schedule: 'Contact admissions',
     ...createPaymentFields(),
     image: '/course-images/security-guard-training.jpg',
-    imageAlt: 'Security training students reviewing professional site procedures',
+    imageAlt: 'Students reviewing site procedures during security guard training in Quebec',
     shortDescription:
-      'Core security guard preparation focused on patrol procedures, report writing, emergency response, and professional conduct.',
+      'A career-focused security guard course in Montreal covering patrol procedures, report writing, emergency response, and professional conduct for the Quebec security licensing pathway.',
+    completionStatement:
+      'Security training students who successfully complete all required course components may receive the applicable training confirmation or certificate required to continue the Quebec security licensing process, subject to student eligibility and applicable regulatory requirements.',
     learn: [
       'Security guard roles, responsibilities, and ethics',
       'Access control, patrol methods, and observation techniques',
@@ -62,7 +64,9 @@ export const courses = [
     image: '/course-images/first-aid-cpr-level-c.jpg',
     imageAlt: 'First aid and CPR training equipment prepared for class',
     shortDescription:
-      'Practical first aid and CPR training for workplace safety, emergency care, and security-sector readiness.',
+      'Practical first aid and CPR training for workplace safety, emergency care, and security-sector readiness, with a certificate available upon successful completion of all course requirements.',
+    completionStatement:
+      'First Aid & CPR students may receive a certificate upon successful completion of all course requirements.',
     learn: [
       'Primary assessment and emergency scene safety',
       'Adult, child, and infant CPR fundamentals',
