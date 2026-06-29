@@ -18,7 +18,7 @@ export const courses = [
   {
     courseId: 'security-guard-training',
     title: 'Security Guard Training',
-    duration: '40 hours',
+    duration: '70 hours',
     level: 'Beginner',
     category: 'Core Training',
     requiresClearCriminalRecord: true,

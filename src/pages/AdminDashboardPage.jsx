@@ -239,6 +239,7 @@ export function AdminDashboardPage() {
       <Seo
         title="Admin Dashboard"
         description="Protected Safe Zone Security Academy admin dashboard for registration leads and contact messages."
+        noindex={true}
       />
       <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
         <section className="flex flex-col gap-4 rounded-lg bg-academyNavy p-6 text-white md:flex-row md:items-center md:justify-between">
@@ -246,7 +247,7 @@ export function AdminDashboardPage() {
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-200">Admin dashboard</p>
             <h1 className="mt-2 text-3xl font-extrabold">Form submissions</h1>
             <p className="mt-2 text-sm leading-6 text-white/75">
-              Review registration leads, market requests, contact messages, notification status, and payment readiness.
+              Review registration leads, store requests, contact messages, notification status, and payment readiness.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -279,7 +280,7 @@ export function AdminDashboardPage() {
           <Card className="p-5">
             <ShoppingBag className="h-6 w-6 text-academyBlue" aria-hidden="true" />
             <p className="mt-3 text-3xl font-extrabold text-slate-950">{orderRequests.length}</p>
-            <p className="text-sm font-semibold text-slate-600">Market requests</p>
+            <p className="text-sm font-semibold text-slate-600">Store requests</p>
           </Card>
           <Card className="p-5">
             <Inbox className="h-6 w-6 text-academyBlue" aria-hidden="true" />
@@ -313,7 +314,7 @@ export function AdminDashboardPage() {
           </div>
           <p className="mt-3 flex items-center gap-2 text-sm text-slate-500">
             <Search className="h-4 w-4" aria-hidden="true" />
-            Showing {filteredLeads.length} leads, {filteredOrderRequests.length} market requests, and{' '}
+            Showing {filteredLeads.length} leads, {filteredOrderRequests.length} store requests, and{' '}
             {filteredMessages.length} messages.
           </p>
         </Card>
@@ -383,7 +384,7 @@ export function AdminDashboardPage() {
         </section>
 
         <section className="mt-8">
-          <h2 className="text-2xl font-extrabold text-slate-950">Market Requests</h2>
+          <h2 className="text-2xl font-extrabold text-slate-950">Store Requests</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
             These are request-to-order submissions only. Staff must confirm final price, taxes, availability, and pickup or
             shipping before treating any request as a purchase.
@@ -451,7 +452,7 @@ export function AdminDashboardPage() {
                 {!isLoading && filteredOrderRequests.length === 0 && (
                   <tr>
                     <td className="px-4 py-6 text-center text-slate-500" colSpan="13">
-                      No market requests match the current search.
+                      No store requests match the current search.
                     </td>
                   </tr>
                 )}

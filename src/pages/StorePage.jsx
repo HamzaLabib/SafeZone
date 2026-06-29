@@ -24,7 +24,7 @@ export function StorePage() {
         description="Browse Safe Zone Security Academy books, course materials, equipment, uniform accessories, bundles, and request-to-order items."
       />
       <PageHero
-        eyebrow="Market"
+        eyebrow="Store"
         title="Store Training Materials"
         description="Browse books, course materials, equipment, accessories, and bundles. Submit a request and the academy will confirm final details before any purchase is made."
         primaryAction={{ label: 'Request an Item', to: '/order-request' }}

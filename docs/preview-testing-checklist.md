@@ -27,7 +27,7 @@ Use this checklist for each Vercel preview before public sharing. Test with prev
 - [ ] Admin login works with the configured preview password.
 - [ ] Invalid admin login shows a safe error and does not reveal configuration details.
 - [ ] Admin login rate limiting returns a temporary lockout after repeated attempts.
-- [ ] Dashboard loads registration leads, contact messages, and market requests.
+- [ ] Dashboard loads registration leads, contact messages, and store requests.
 - [ ] Admin lead status update works.
 - [ ] Admin market request status update works.
 - [ ] Email notification status displays as `sent`, `failed`, or `pending`.
