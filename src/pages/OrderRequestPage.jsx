@@ -11,7 +11,8 @@ const REQUEST_NOTICE =
   'Submitting a request is not a purchase. Final price, taxes, availability, and pickup or shipping will be confirmed by the academy.';
 
 const initialValues = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
   product: '',
@@ -39,9 +40,8 @@ function validate(values) {
   const errors = {};
   const quantity = parseStrictInteger(values.quantity);
 
-  if (!values.name.trim()) {
-    errors.name = 'Enter your full name.';
-  }
+  if (!values.firstName.trim()) errors.firstName = 'Enter your first name.';
+  if (!values.lastName.trim()) errors.lastName = 'Enter your last name.';
 
   if (!values.email.trim()) {
     errors.email = 'Enter your email address.';
@@ -104,7 +104,8 @@ export function OrderRequestPage() {
   function mapServerErrors(serverErrors = {}) {
     const fieldMap = {
       productId: 'product',
-      fullName: 'name',
+      name: 'firstName',
+      fullName: 'firstName',
     };
 
     return Object.entries(serverErrors).reduce((nextErrors, [key, value]) => {
@@ -127,13 +128,19 @@ export function OrderRequestPage() {
 
     try {
       const selectedProduct = products.find((product) => product.productId === values.product);
+      const firstName = values.firstName.trim();
+      const lastName = values.lastName.trim();
+      const name = `${firstName} ${lastName}`;
       const response = await fetch('/api/order-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          fullName: values.name,
+          firstName,
+          lastName,
+          name,
+          fullName: name,
           email: values.email,
           phone: values.phone,
           productId: selectedProduct?.productId || values.product,
@@ -198,15 +205,28 @@ export function OrderRequestPage() {
 
         <Card as="section" className="p-6">
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
-            <InputField
-              id="order-name"
-              label="Full name"
-              name="name"
-              autoComplete="name"
-              value={values.name}
-              error={errors.name}
-              onChange={handleChange}
-            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <InputField
+                id="order-first-name"
+                label="First Name"
+                name="firstName"
+                required
+                autoComplete="given-name"
+                value={values.firstName}
+                error={errors.firstName}
+                onChange={handleChange}
+              />
+              <InputField
+                id="order-last-name"
+                label="Last Name"
+                name="lastName"
+                required
+                autoComplete="family-name"
+                value={values.lastName}
+                error={errors.lastName}
+                onChange={handleChange}
+              />
+            </div>
             <InputField
               id="order-email"
               label="Email"

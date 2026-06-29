@@ -88,6 +88,8 @@ export default async function handler(request, response) {
     const result = await db.collection('registrationLeads').insertOne(document);
 
     const fieldsHtml = formatFields({
+      'First name': data.firstName,
+      'Last name': data.lastName,
       'Full name': data.fullName,
       Email: data.email,
       Phone: data.phone,
@@ -108,6 +110,8 @@ export default async function handler(request, response) {
         html: `<h2>New registration interest</h2><table>${fieldsHtml}</table>`,
         text: [
           'New registration interest',
+          `First name: ${data.firstName || '-'}`,
+          `Last name: ${data.lastName || '-'}`,
           `Full name: ${data.fullName}`,
           `Email: ${data.email}`,
           `Phone: ${data.phone}`,

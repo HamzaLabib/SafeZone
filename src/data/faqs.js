@@ -21,4 +21,9 @@ export const faqs = [
     question: 'What are the requirements to register?',
     answer: 'Students should have valid identification, reliable contact information, and be ready to participate professionally in class activities.',
   },
+  {
+    question: 'Do I need a Clear Criminal Record (CCR)?',
+    answer:
+      'Yes. Safe Zone Security Academy requires students to have a Clear Criminal Record (CCR) before registering for security training and before proceeding with the security licensing process. If you are unsure about your eligibility, please contact admissions before registering.',
+  },
 ];

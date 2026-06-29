@@ -4,11 +4,12 @@ import { Seo } from '../components/Seo';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CheckboxField, InputField, SelectField, TextareaField } from '../components/ui/FormField';
-import { businessInfo } from '../data/business';
+import { businessInfo, clearCriminalRecordNote } from '../data/business';
 import { courses } from '../data/courses';
 
 const initialValues = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
   course: '',
@@ -21,9 +22,8 @@ const initialValues = {
 function validate(values) {
   const errors = {};
 
-  if (!values.name.trim()) {
-    errors.name = 'Enter your full name.';
-  }
+  if (!values.firstName.trim()) errors.firstName = 'Enter your first name.';
+  if (!values.lastName.trim()) errors.lastName = 'Enter your last name.';
 
   if (!values.email.trim()) {
     errors.email = 'Enter your email address.';
@@ -76,7 +76,8 @@ export function RegisterPage() {
 
   function mapServerErrors(serverErrors = {}) {
     const fieldMap = {
-      fullName: 'name',
+      name: 'firstName',
+      fullName: 'firstName',
       selectedCourseId: 'course',
       courseInterest: 'course',
       preferredContactMethod: 'contactMethod',
@@ -102,13 +103,19 @@ export function RegisterPage() {
 
     try {
       const selectedCourse = courses.find((course) => course.courseId === values.course);
+      const firstName = values.firstName.trim();
+      const lastName = values.lastName.trim();
+      const name = `${firstName} ${lastName}`;
       const response = await fetch('/api/register-interest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          fullName: values.name,
+          firstName,
+          lastName,
+          name,
+          fullName: name,
           email: values.email,
           phone: values.phone,
           selectedCourseId: selectedCourse?.courseId || values.course,
@@ -181,15 +188,28 @@ export function RegisterPage() {
         </section>
         <Card as="section" className="p-6">
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
-            <InputField
-              id="register-name"
-              label="Full name"
-              name="name"
-              autoComplete="name"
-              value={values.name}
-              error={errors.name}
-              onChange={handleChange}
-            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <InputField
+                id="register-first-name"
+                label="First Name"
+                name="firstName"
+                required
+                autoComplete="given-name"
+                value={values.firstName}
+                error={errors.firstName}
+                onChange={handleChange}
+              />
+              <InputField
+                id="register-last-name"
+                label="Last Name"
+                name="lastName"
+                required
+                autoComplete="family-name"
+                value={values.lastName}
+                error={errors.lastName}
+                onChange={handleChange}
+              />
+            </div>
             <InputField
               id="register-email"
               label="Email"
@@ -225,6 +245,9 @@ export function RegisterPage() {
                 </option>
               ))}
             </SelectField>
+            <div role="note" className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold leading-6 text-amber-950">
+              {clearCriminalRecordNote}
+            </div>
             <SelectField
               id="register-contact-method"
               label="Preferred contact method"

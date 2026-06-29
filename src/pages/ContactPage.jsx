@@ -8,7 +8,8 @@ import { CheckboxField, InputField, TextareaField } from '../components/ui/FormF
 import { businessInfo } from '../data/business';
 
 const initialValues = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
   subject: '',
@@ -20,9 +21,8 @@ const initialValues = {
 function validate(values) {
   const errors = {};
 
-  if (!values.name.trim()) {
-    errors.name = 'Enter your name.';
-  }
+  if (!values.firstName.trim()) errors.firstName = 'Enter your first name.';
+  if (!values.lastName.trim()) errors.lastName = 'Enter your last name.';
 
   if (!values.email.trim()) {
     errors.email = 'Enter your email address.';
@@ -63,6 +63,18 @@ export function ContactPage() {
     setFormMessage(null);
   }
 
+  function mapServerErrors(serverErrors = {}) {
+    const fieldMap = {
+      name: 'firstName',
+      fullName: 'firstName',
+    };
+
+    return Object.entries(serverErrors).reduce((nextErrors, [key, value]) => {
+      nextErrors[fieldMap[key] || key] = value;
+      return nextErrors;
+    }, {});
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     const nextErrors = validate(values);
@@ -76,17 +88,26 @@ export function ContactPage() {
     setFormMessage(null);
 
     try {
+      const firstName = values.firstName.trim();
+      const lastName = values.lastName.trim();
+      const name = `${firstName} ${lastName}`;
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          firstName,
+          lastName,
+          name,
+          fullName: name,
+        }),
       });
       const result = await response.json();
 
       if (!response.ok || !result.ok) {
-        setErrors(result.errors || {});
+        setErrors(mapServerErrors(result.errors));
         setFormMessage({
           type: 'error',
           text: result.error || 'We could not submit your message right now.',
@@ -141,15 +162,28 @@ export function ContactPage() {
         </section>
         <Card as="section" className="p-6">
           <form className="grid gap-4" onSubmit={handleSubmit} noValidate>
-            <InputField
-              id="contact-name"
-              label="Name"
-              name="name"
-              autoComplete="name"
-              value={values.name}
-              error={errors.name}
-              onChange={handleChange}
-            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <InputField
+                id="contact-first-name"
+                label="First Name"
+                name="firstName"
+                required
+                autoComplete="given-name"
+                value={values.firstName}
+                error={errors.firstName}
+                onChange={handleChange}
+              />
+              <InputField
+                id="contact-last-name"
+                label="Last Name"
+                name="lastName"
+                required
+                autoComplete="family-name"
+                value={values.lastName}
+                error={errors.lastName}
+                onChange={handleChange}
+              />
+            </div>
             <InputField
               id="contact-email"
               label="Email"
