@@ -4,6 +4,7 @@ import { getClientIp, getUserAgent, parseJsonBody, rejectUnsupportedMethod, send
 import { isRateLimited } from './_lib/rateLimit.js';
 import { hasSpamTrap, validateRegistration } from './_lib/validation.js';
 import { DEFAULT_CURRENCY, getCourseById, hasConfirmedPrice } from '../src/data/courses.js';
+import { getSecurityProgramById } from '../src/data/programs.js';
 
 export default async function handler(request, response) {
   if (rejectUnsupportedMethod(request, response)) {
@@ -39,7 +40,9 @@ export default async function handler(request, response) {
   }
 
   const { data, errors } = validateRegistration(body);
-  const selectedCourse = data.selectedCourseId ? getCourseById(data.selectedCourseId) : null;
+  const selectedOffering = data.selectedCourseId
+    ? getSecurityProgramById(data.selectedCourseId) || getCourseById(data.selectedCourseId)
+    : null;
 
   if (Object.keys(errors).length > 0) {
     sendJson(response, 400, {
@@ -50,27 +53,29 @@ export default async function handler(request, response) {
     return;
   }
 
-  if (data.selectedCourseId && !selectedCourse) {
+  if (data.selectedCourseId && !selectedOffering) {
     sendJson(response, 400, {
       ok: false,
       error: 'Please correct the highlighted fields.',
       errors: {
-        selectedCourseId: 'Choose a valid course of interest.',
+        selectedCourseId: 'Choose a valid program or course of interest.',
       },
     });
     return;
   }
 
   const createdAt = new Date();
-  const selectedCourseId = selectedCourse?.courseId || data.selectedCourseId || null;
-  const selectedCourseTitle = selectedCourse?.title || data.selectedCourseTitle || data.courseInterest;
-  const amountCents = selectedCourse && hasConfirmedPrice(selectedCourse) ? selectedCourse.amountCents : null;
-  const currency = selectedCourse?.currency || DEFAULT_CURRENCY;
+  const selectedCourseId = selectedOffering?.programId || selectedOffering?.courseId || data.selectedCourseId || null;
+  const selectedCourseTitle = selectedOffering?.title || data.selectedCourseTitle || data.courseInterest;
+  const amountCents = selectedOffering && hasConfirmedPrice(selectedOffering) ? selectedOffering.amountCents : null;
+  const currency = selectedOffering?.currency || DEFAULT_CURRENCY;
+  const offeringType = selectedOffering?.programId ? 'program' : 'course';
   const document = {
     ...data,
     courseInterest: selectedCourseTitle,
     selectedCourseId,
     selectedCourseTitle,
+    offeringType,
     amountCents,
     currency,
     paymentStatus: 'unpaid',
@@ -93,10 +98,11 @@ export default async function handler(request, response) {
       'Full name': data.fullName,
       Email: data.email,
       Phone: data.phone,
-      'Course interest': selectedCourseTitle,
-      'Course ID': selectedCourseId,
+      'Program or course interest': selectedCourseTitle,
+      'Offering ID': selectedCourseId,
+      'Offering type': offeringType,
       'Payment status': 'unpaid',
-      'Course price': amountCents ? `${currency} ${(amountCents / 100).toFixed(2)}` : 'Contact us for pricing',
+      'Program or course price': amountCents ? `${currency} ${(amountCents / 100).toFixed(2)}` : 'Contact us for pricing',
       'Preferred contact': data.preferredContactMethod,
       Message: data.message,
       Consent: data.consent ? 'Accepted' : 'Not accepted',
@@ -115,10 +121,11 @@ export default async function handler(request, response) {
           `Full name: ${data.fullName}`,
           `Email: ${data.email}`,
           `Phone: ${data.phone}`,
-          `Course interest: ${selectedCourseTitle}`,
-          `Course ID: ${selectedCourseId || '-'}`,
+          `Program or course interest: ${selectedCourseTitle}`,
+          `Offering ID: ${selectedCourseId || '-'}`,
+          `Offering type: ${offeringType}`,
           'Payment status: unpaid',
-          `Course price: ${amountCents ? `${currency} ${(amountCents / 100).toFixed(2)}` : 'Contact us for pricing'}`,
+          `Program or course price: ${amountCents ? `${currency} ${(amountCents / 100).toFixed(2)}` : 'Contact us for pricing'}`,
           `Preferred contact: ${data.preferredContactMethod}`,
           `Message: ${data.message || '-'}`,
           `Submitted: ${createdAt.toISOString()}`,

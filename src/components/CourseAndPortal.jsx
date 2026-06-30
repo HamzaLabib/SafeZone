@@ -1,5 +1,7 @@
 import { CourseCard } from './CourseCard';
+import { SecurityProgramCard } from './SecurityProgramCard';
 import { getFeaturedCourses } from '../data/courses';
+import { securityProgram } from '../data/programs';
 import { Button } from './ui/Button';
 import { SectionHeader } from './ui/SectionHeader';
 
@@ -9,15 +11,29 @@ export function CourseAndPortal() {
   return (
     <section>
       <SectionHeader
-        eyebrow="Security courses in Montreal"
-        title="Professional security training for your next step"
-        description="Explore a security guard course in Montreal and related programs for Quebec licensing preparation, emergency response, and career development. Admissions can help you choose a suitable path."
+        eyebrow="Main Security Program"
+        title="Complete security training in one program"
+        description="The main 70-hour Security Program includes the book, theoretical training, tactical training, and CNESST training."
         action={
-          <Button to="/courses" variant="ghost" size="sm">
-            View All Courses
+          <Button to={`/programs/${securityProgram.programId}`} variant="ghost" size="sm">
+            View Program
           </Button>
         }
       />
+      <SecurityProgramCard program={securityProgram} />
+
+      <div className="mt-12">
+        <SectionHeader
+          eyebrow="Individual courses"
+          title="Separate courses remain available"
+          description="SafeZone also offers individual courses separately from the main Security Program. Choose a focused course based on your training goal."
+          action={
+            <Button to="/courses" variant="ghost" size="sm">
+              View All Courses
+            </Button>
+          }
+        />
+      </div>
       <div className="grid gap-4 md:grid-cols-3">
         {featuredCourses.map((course) => (
           <CourseCard key={course.courseId} course={course} />
