@@ -14,6 +14,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { OrderRequestPage } from './pages/OrderRequestPage';
 import { ProductDetailsPage } from './pages/ProductDetailsPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { SecurityProgramPage } from './pages/SecurityProgramPage';
 import { StorePage } from './pages/StorePage';
 import { StaticInfoPage } from './pages/StaticInfoPage';
 import { ThankYouPage } from './pages/ThankYouPage';
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CourseDetailsPage />} />
+        <Route path="/programs/:programId" element={<SecurityProgramPage />} />
         <Route path="/checkout/:courseId" element={<CheckoutPage />} />
         <Route path="/store" element={<StorePage />} />
         <Route path="/store/:productId" element={<ProductDetailsPage />} />

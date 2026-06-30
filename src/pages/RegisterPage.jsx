@@ -6,6 +6,13 @@ import { Card } from '../components/ui/Card';
 import { CheckboxField, InputField, SelectField, TextareaField } from '../components/ui/FormField';
 import { businessInfo, clearCriminalRecordNote } from '../data/business';
 import { courses } from '../data/courses';
+import { securityProgram } from '../data/programs';
+
+const registrationOfferings = [securityProgram, ...courses];
+
+function getOfferingId(offering) {
+  return offering.programId || offering.courseId;
+}
 
 const initialValues = {
   firstName: '',
@@ -36,7 +43,7 @@ function validate(values) {
   }
 
   if (!values.course) {
-    errors.course = 'Choose a course of interest.';
+    errors.course = 'Choose a program or course of interest.';
   }
 
   if (!values.consent) {
@@ -51,7 +58,7 @@ export function RegisterPage() {
   const [searchParams] = useSearchParams();
   const selectedFromUrl = searchParams.get('course') || '';
   const initialCourse = useMemo(
-    () => (courses.some((course) => course.courseId === selectedFromUrl) ? selectedFromUrl : ''),
+    () => (registrationOfferings.some((offering) => getOfferingId(offering) === selectedFromUrl) ? selectedFromUrl : ''),
     [selectedFromUrl],
   );
   const [values, setValues] = useState({ ...initialValues, course: initialCourse });
@@ -102,7 +109,7 @@ export function RegisterPage() {
     setFormMessage(null);
 
     try {
-      const selectedCourse = courses.find((course) => course.courseId === values.course);
+      const selectedOffering = registrationOfferings.find((offering) => getOfferingId(offering) === values.course);
       const firstName = values.firstName.trim();
       const lastName = values.lastName.trim();
       const name = `${firstName} ${lastName}`;
@@ -118,9 +125,9 @@ export function RegisterPage() {
           fullName: name,
           email: values.email,
           phone: values.phone,
-          selectedCourseId: selectedCourse?.courseId || values.course,
-          selectedCourseTitle: selectedCourse?.title || values.course,
-          courseInterest: selectedCourse?.title || values.course,
+          selectedCourseId: selectedOffering ? getOfferingId(selectedOffering) : values.course,
+          selectedCourseTitle: selectedOffering?.title || values.course,
+          courseInterest: selectedOffering?.title || values.course,
           preferredContactMethod: values.contactMethod,
           message: values.message,
           consent: values.consent,
@@ -160,7 +167,8 @@ export function RegisterPage() {
           <p className="text-sm font-semibold uppercase tracking-wide text-academyBlue">Register interest</p>
           <h1 className="mt-2 text-4xl font-extrabold text-slate-950">Start your security training journey.</h1>
           <p className="mt-4 leading-7 text-slate-600">
-            Submit your course interest so admissions can confirm schedule, pricing, format, and enrollment next steps.
+            Choose the main Security Program or a separate individual course. Admissions will confirm schedule, format, and
+            enrollment next steps.
           </p>
           <p className="mt-4 text-sm leading-6 text-slate-600">
             Prefer email? Contact admissions at{' '}
@@ -232,18 +240,25 @@ export function RegisterPage() {
             />
             <SelectField
               id="register-course"
-              label="Course of interest"
+              label="Program or course of interest"
               name="course"
               value={values.course}
               error={errors.course}
               onChange={handleChange}
             >
-              <option value="">Choose a course</option>
-              {courses.map((course) => (
-                <option key={course.courseId} value={course.courseId}>
-                  {course.title}
+              <option value="">Choose a program or course</option>
+              <optgroup label="Main Program">
+                <option value={securityProgram.programId}>
+                  {securityProgram.title} - {securityProgram.duration} - {securityProgram.displayPrice}
                 </option>
-              ))}
+              </optgroup>
+              <optgroup label="Individual Courses">
+                {courses.map((course) => (
+                  <option key={course.courseId} value={course.courseId}>
+                    {course.title}
+                  </option>
+                ))}
+              </optgroup>
             </SelectField>
             <div role="note" className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold leading-6 text-amber-950">
               {clearCriminalRecordNote}

@@ -72,6 +72,7 @@ Copy `.env.example` to `.env` for local backend testing, and add the same variab
 - `/about`
 - `/courses`
 - `/courses/:courseId`
+- `/programs/security-program`
 - `/checkout/:courseId`
 - `/store`
 - `/store/:productId`
