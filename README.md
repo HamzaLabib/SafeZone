@@ -1,113 +1,133 @@
-# Safe Zone Security Academy Website
+# Safe Zone Security Academy
 
-React + Tailwind + React Router frontend prepared for Vercel deployment.
+Official website for Safe Zone Security Academy.
 
-This is currently a brochure, lead-generation, and request-to-order website with MongoDB-backed registration, contact, and store submissions, Resend admin notifications, and a simple password-protected admin dashboard. There is no student portal backend, live payment processing, cart, or student authentication connected yet.
+The platform provides information about security training programs and courses, allows prospective students to submit registration inquiries, supports customer contact requests, and includes a request-to-order store.
 
-Payment readiness notes are documented in [docs/payment-readiness.md](docs/payment-readiness.md). The site is prepared for a future Stripe Checkout Sessions integration, but live payments remain disabled.
+## Technology
 
-## Local development
-1. `npm install`
-2. `npm run dev`
-3. Open the local URL shown by Vite.
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Node.js / Vercel Serverless Functions
+- MongoDB
+- Resend
+- Vercel
 
-Plain Vite dev serves the frontend only. For local API testing, use Vercel's local runtime (`vercel dev`) after configuring local environment variables.
+## Features
 
-## Vercel preview setup
-Before creating or testing a Vercel preview deployment, configure these environment variables in the Vercel project settings for the Preview environment. Do not commit real values to GitHub.
+- Responsive public website
+- Security training course catalogue
+- Main Security Program page
+- Course detail pages
+- Registration interest form
+- Contact form
+- Store and product pages
+- Request-to-order workflow
+- Email notifications for new submissions
+- Administrative dashboard
+- Privacy Policy and Terms pages
+- Responsive desktop and mobile design
+- SEO and sitemap configuration
 
-- `MONGODB_URI`: MongoDB Atlas connection string.
-- `MONGODB_DB`: database name, defaults to `safeZoneSecurityAcademy`.
-- `ADMIN_PASSWORD`: temporary preview admin password for `/admin/login`; replace before staff handoff.
-- `RESEND_API_KEY`: Resend API key for admin notification email delivery.
-- `ADMIN_NOTIFICATION_EMAIL`: recipient inbox for contact, registration interest, and item request alerts.
-- `EMAIL_FROM`: verified sender address used by Resend.
-- `STRIPE_SECRET_KEY`: future Stripe secret key; leave blank until approved test-mode payment activation.
-- `STRIPE_WEBHOOK_SECRET`: future Stripe webhook secret; leave blank until webhook activation.
-- `APP_BASE_URL`: future absolute app URL for Stripe redirects; leave blank until payment activation needs it.
-- `VITE_STRIPE_PUBLISHABLE_KEY`: future publishable key only; leave blank until frontend Stripe usage is approved.
+## Local Development
 
-Recommended preview flow:
+Install dependencies:
 
-1. Install Vercel CLI if needed: `npm install -g vercel`.
-2. Link the project: `vercel link`.
-3. Pull preview/development variables into an ignored local file: `vercel env pull .env.local`.
-4. Run `vercel dev` to test both the React frontend and `/api/*` routes locally.
-5. Use `npm run dev` only when you are testing frontend routes without serverless API execution.
-6. Use `npm run build` before pushing or promoting a preview.
+```bash
+npm install
+```
 
-Additional preview QA is tracked in [docs/preview-testing-checklist.md](docs/preview-testing-checklist.md).
+Start the Vite development server:
 
-## Production build
-- `npm run build`
-- Output directory: `dist`
+```bash
+npm run dev
+```
 
-## Backend environment
-Copy `.env.example` to `.env` for local backend testing, and add the same variables in Vercel:
+For local testing of both the frontend and Vercel serverless API routes:
 
-- `MONGODB_URI`: MongoDB Atlas connection string.
-- `MONGODB_DB`: database name, defaults to `safeZoneSecurityAcademy`.
-- `ADMIN_NOTIFICATION_EMAIL`: admissions/admin inbox for new submissions.
-- `EMAIL_FROM`: verified sender address for email notifications.
-- `RESEND_API_KEY`: Resend API key for email delivery.
-- `ADMIN_PASSWORD`: temporary password for `/admin/login`.
-- `STRIPE_SECRET_KEY`: future Stripe secret key; leave blank until test-mode payment activation.
-- `STRIPE_WEBHOOK_SECRET`: future webhook signing secret; leave blank until webhook activation.
-- `APP_BASE_URL`: future absolute app URL for Stripe success/cancel redirects.
-- `VITE_STRIPE_PUBLISHABLE_KEY`: future publishable key if the frontend needs Stripe.js.
+```bash
+vercel dev
+```
 
-## API routes
-- `POST /api/register-interest`
-- `POST /api/order-request`
-- `POST /api/contact`
-- `GET /api/admin/login`
-- `POST /api/admin/login`
-- `POST /api/admin/logout`
-- `GET /api/admin/dashboard-data`
-- `POST /api/admin/update-lead-status`
-- `POST /api/admin/update-order-status`
+## Environment Variables
 
-## Routes
+Backend services require environment variables for services such as:
+
+- MongoDB
+- Resend
+- Administrative authentication
+
+Create local environment configuration from `.env.example`.
+
+Never commit real credentials or production secrets to the repository.
+
+## Production Build
+
+```bash
+npm run build
+```
+
+Production output is generated in:
+
+```text
+dist/
+```
+
+## Main Routes
+
+Public routes include:
+
 - `/`
 - `/about`
 - `/courses`
 - `/courses/:courseId`
 - `/programs/security-program`
-- `/checkout/:courseId`
 - `/store`
 - `/store/:productId`
-- `/shop` and `/shop/:productId` redirect to the corresponding store routes
 - `/order-request`
 - `/register`
 - `/contact`
 - `/faq`
-- `/thank-you` (utility page, noindex)
 - `/privacy`
 - `/terms`
-- `/admin/login`
-- `/admin/dashboard`
-- `*` renders a 404 page
 
-## Vercel SPA fallback
-`vercel.json` includes a rewrite of all routes to `index.html` for direct-link support.
+Administrative functionality is available through separate protected routes.
 
-## Launch notes
-- Configure MongoDB and Resend environment variables before live launch.
-- Replace any unconfirmed business contact details before showing users.
-- Replace the temporary admin password approach with proper role-based authentication before handing access to staff.
-- Add real authentication before enabling student dashboard features.
-- Add real schedules, pricing, and Stripe Checkout integration only when confirmed by the business.
-- Keep store requests as request-to-order only until product prices, taxes, availability, pickup/shipping, and refund policy are confirmed.
-- Use Stripe test mode and webhook signature verification before considering live mode.
-- Collect remaining owner launch content in [docs/owner-launch-content-checklist.md](docs/owner-launch-content-checklist.md).
-- Treat the current admin dashboard as preview-only; see [docs/admin-operations-readiness.md](docs/admin-operations-readiness.md).
-- Asset cleanup notes are tracked in [docs/asset-readiness.md](docs/asset-readiness.md).
+## Backend
 
-## Deploy to Vercel
-1. Push project to GitHub.
-2. Open Vercel and click **Add New Project**.
-3. Import the GitHub repository.
-4. Set framework preset to **Vite** (or React if shown).
-5. Build command: `npm run build`
-6. Output directory: `dist`
-7. Click **Deploy**.
+Serverless API endpoints support:
+
+- Registration inquiries
+- Contact submissions
+- Store order requests
+- Administrative authentication
+- Administrative lead and request management
+
+MongoDB is used for persistent application data, and Resend is used for administrative email notifications.
+
+## Deployment
+
+The application is configured for deployment on Vercel.
+
+Typical deployment:
+
+1. Connect the GitHub repository to Vercel.
+2. Configure the required environment variables.
+3. Use the Vite framework configuration.
+4. Build using:
+
+```bash
+npm run build
+```
+
+5. Deploy the generated application.
+
+## Security
+
+Production credentials and API keys are managed through environment variables and are not stored in this repository.
+
+## Status
+
+Safe Zone Security Academy is under active development and maintenance.
